@@ -38,7 +38,7 @@ function* fetchGenresPresent() {
 function* fetchMovieByGenreSaga(action) {
     try {
         console.log('IN FETCH MOVIES SAGA');
-        const moviesBy = yield axios.get(`/movies/${action.payload}`);
+        const moviesBy = yield axios.get(`/genres/by/${action.payload}`);
         yield put({ type: 'SET_MOVIES', payload: moviesBy.data })
     } catch (error) {
         console.log('Error in fetchMovieByGenreSaga', error)
@@ -50,7 +50,7 @@ function* fetchMovieByGenreSaga(action) {
 function* fetchMovieDetails(action) {
     try {
         console.log('IN FETCH MOVIE DETAILS SAGA' );
-        const movieDetails = yield axios.get(`/movies/details/${action.payload}`);
+        const movieDetails = yield axios.get(`/movies/${action.payload}`);
         console.log(movieDetails.data);
         yield put({ type: 'SET_MOVIE_DETAILS', payload: movieDetails.data });
     } catch (error) {
@@ -60,7 +60,7 @@ function* fetchMovieDetails(action) {
 function* updateMovieDetails(action) {
     try{
         console.log('IN UPDATE MOVIE DETAILS SAGA' );
-        yield axios.put(`/movies/details`, action.payload)
+        yield axios.put(`/movies`, action.payload)
         yield put({type:'FETCH_MOVIE_DETAILS', payload: action.payload.id});
     } catch (error){
         console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);

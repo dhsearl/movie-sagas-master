@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux'
 import './App.css'
 import Navbar from '../Navbar/Navbar'
-import Gallery from '../Gallery/Gallery'
-import Details from '../Details/Details'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'react-bulma-components'
+
+import RouteContainer from '../RouteContainer/RouteContainer'
+import { HashRouter as Router} from 'react-router-dom'
+
 class App extends Component {
 
     render() {
@@ -14,13 +14,7 @@ class App extends Component {
             
             <Router >
                 <Navbar />
-                {/* <Gallery /> */}
-            <Container>
-            <Route path="/" exact component={Gallery} />
-            <Switch>
-                <Route path="/details/:id" children={Details} />
-            </Switch>
-            </Container>
+                <RouteContainer />
             </Router>
             
         )

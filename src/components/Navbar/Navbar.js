@@ -10,11 +10,14 @@ class _Navbar extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch({ type: "FETCH_GENRES" })
         this.props.dispatch({type:'FETCH_GENRES_PRESENT'})
+        this.props.dispatch({ type: "FETCH_GENRES" })
+        
     }
 
     onChange = (selected) => {
+        console.log(selected);
+        
         this.setState({ selected }, () => {
             if (selected !== 'default') {
                 this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: selected })
@@ -57,6 +60,8 @@ class _Navbar extends Component {
 
     {/* If on the main path, show the dropdown to select Genres */}
                         {this.props.location.pathname === "/" &&
+                        this.props.genresPresent[0] &&
+                        (
                             <Navbar.Item >
                                 <Dropdown
                                     color="info"
@@ -69,26 +74,30 @@ class _Navbar extends Component {
                                         All genres
                                     </Dropdown.Item>
     {/* Changed this line for the genre by genre name route test */}
-                                    {this.props.genres.map(each =>
-                                        <Dropdown.Item value={each.name} key={each.id}>
-                                            {each.name}
+                                    {this.props.genresPresent[0].array_agg.map(each =>
+                                        <Dropdown.Item value={each} key={each}>
+                                            {each}
                                         </Dropdown.Item>
                                     )}
                                 </Dropdown>
                             </Navbar.Item>
-                        }
+                        )}
                     </Navbar.Brand>
                     </Container>
                 </Navbar>
-                {this.props.location.pathname === "/" &&
+                
                 <Section backgroundColor="warning">
-                <Container> {this.props.genresPresent[0].array_agg.length> 0 && 
+                {/* <Container>  */}
+                    
+                    {/* {this.props.genresPresent[0].array_agg.length> 0 && 
                     this.props.genresPresent[0].array_agg.map( 
                         eachGenre => 
-                        <span style={{paddingRight:"1rem"}} key={eachGenre}>{eachGenre}</span> )}</Container>
+                        <span style={{paddingRight:"1rem"}} key={eachGenre}>{eachGenre}</span> )}
+                         */}
+                        {/* </Container> */}
                     {/* <pre>{JSON.stringify(this.props.genresPresent[0].array_agg,null,2)}</pre> */}
                     
-                </Section>}
+                </Section>
             </>
         )
     }

@@ -19,6 +19,7 @@ class DetailsEdit extends Component {
                 ...this.props.movieDetails[0],
             })
     }
+    
     handleInputs = (event, value) => {
         this.setState({
             ...this.state,
@@ -28,6 +29,7 @@ class DetailsEdit extends Component {
     handleGenreDropdown = (selected) => {
         this.setState({ genre: selected })
     }
+
 
     handleSaveClick = () => {
         this.props.dispatch({ type: 'UPDATE_MOVIE_DETAILS', payload: this.state })

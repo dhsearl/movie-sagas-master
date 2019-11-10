@@ -5,8 +5,7 @@ import { Card, Content, Heading } from 'react-bulma-components'
 class GalleryPosterCard extends Component {
 
     routeToMovieDetails = (id) => {
-        // this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: id })
-        this.props.history.push(`/details/${id}`)
+        this.props.history.push(`/${id}`)
     }
 
     makeShorter = (description) => {

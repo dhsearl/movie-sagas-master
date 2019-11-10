@@ -24,6 +24,28 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/by/:genre', (req, res) => {
+    console.log('movie.router by Genre Name GET hit', req.params.genre);
+    
+    const queryText = 
+    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
+    FROM movies
+    JOIN movies_genres ON movies.id = movies_genres.movie_id
+    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
+    WHERE genres.name = $1
+    ORDER BY movies.title;`
+    const queryArguments = [req.params.genre]
+    pool.query(queryText, queryArguments)
+        .then((result) => {
+            console.log('/movies/id GET success', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in movie.router GET', error);
+            res.sendStatus(500);
+        })
+})
+
 // This responds with the list of genres currently in the collection
 //      This is used by the Fetch Genres Present Saga
 //      This is connected to the Set Genres Present Reducer
