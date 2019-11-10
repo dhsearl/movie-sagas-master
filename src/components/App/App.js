@@ -4,8 +4,11 @@ import './App.css'
 import Navbar from '../Navbar/Navbar'
 import Gallery from '../Gallery/Gallery'
 import Details from '../Details/Details'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Container } from 'react-bulma-components'
+import RouteContainer from '../RouteContainer/RouteContainer';
+
 class App extends Component {
 
     render() {
@@ -14,13 +17,7 @@ class App extends Component {
             
             <Router >
                 <Navbar />
-                {/* <Gallery /> */}
-            <Container>
-            <Route path="/" exact component={Gallery} />
-            <Switch>
-                <Route path="/details/:id" children={Details} />
-            </Switch>
-            </Container>
+                <RouteContainer />
             </Router>
             
         )
