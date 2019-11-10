@@ -38,6 +38,9 @@ em{
 .navGenre{
     padding-right: 1rem;
 }
+.navGenre:hover{
+    color: whitesmoke;
+}
 /* .navBar{
     display: flex;
     flex-direction: row;
@@ -76,6 +79,7 @@ em{
     left: 0;
     right: 0;
 }
+
   /* .example-enter {
     opacity: 0.01;
   }

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Container, Navbar, Button, Dropdown, Icon, Section, Tab } from 'react-bulma-components'
 
 
-class _Navbar extends Component {
+class Navigation extends Component {
     // Using state to track the default state of the dropdown
     // Making a selection hits a different Saga/Reducer
     state = {
@@ -20,14 +20,27 @@ class _Navbar extends Component {
     // Handle Change of Genre Dropdown
     // Only shows movies of that genre
     // Only shows genres we have in the movies
-    onChange = (selected) => {
-        this.setState({ selected }, () => {
-            if (selected !== 'default') {
-                this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: selected })
-            } else {
-                this.props.dispatch({ type: "FETCH_MOVIES" })
-            }
-        });
+    // onChange = (selected) => {
+    //     this.setState({ selected }, () => {
+    //         if (selected !== 'default') {
+    //             this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: selected })
+    //         } else {
+    //             this.props.dispatch({ type: "FETCH_MOVIES" })
+    //         }
+    //     });
+    // }
+
+    filterByGenre = (genre) => {
+        this.setState({
+            selected: genre
+        })
+        this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: genre })
+    }
+    allGenre = () => {
+        this.setState({
+            selected: 'default'
+        })
+        this.props.dispatch({ type: "FETCH_MOVIES" })
     }
 
     render() {
@@ -42,9 +55,9 @@ class _Navbar extends Component {
                     <Container>
                         <Navbar.Brand>
                             <Navbar.Item
-                                onClick={() => {
+                                onClick={() => { this.setState({selected:'default'})
                                     this.props.location.pathname !== "/" &&
-                                    this.props.history.push('/')
+                                        this.props.history.push('/')
                                 }}>
                                 <Icon size="large">
                                     <i className="fas fa-film fa-2x"></i>
@@ -90,13 +103,24 @@ class _Navbar extends Component {
                 </Navbar>
 
                 <Section backgroundColor="warning">
-                    <Container> 
+                    <Container>
+                        <span
+                            className="navGenre"
+                            style={{color: 'default'===this.state.selected && '#5ccd50'}}
+                            onClick={this.allGenre}
+                        >All</span>
+                        {this.props.genresPresent[0].array_agg.length > 0 &&
+                            this.props.genresPresent[0].array_agg.map(
+                                eachGenre =>
+                                    <span
+                                        className="navGenre"
+                                        style={{
+                                            color: eachGenre===this.state.selected && '#5ccd50'
+                                          }}
+                                        key={eachGenre}
+                                        onClick={() => this.filterByGenre(eachGenre)}
+                                    >{eachGenre}</span>)}
 
-                    {this.props.genresPresent[0].array_agg.length> 0 && 
-                    this.props.genresPresent[0].array_agg.map( 
-                        eachGenre => 
-                        <span className="navGenre" key={eachGenre}>{eachGenre}</span> )}
-                        
                     </Container>
                     {/* <pre>{JSON.stringify(this.props.genresPresent[0].array_agg,null,2)}</pre> */}
 
@@ -109,4 +133,4 @@ class _Navbar extends Component {
 const mapReduxStateToProps = (reduxState) => {
     return reduxState
 }
-export default withRouter(connect(mapReduxStateToProps)(_Navbar));
+export default withRouter(connect(mapReduxStateToProps)(Navigation));
