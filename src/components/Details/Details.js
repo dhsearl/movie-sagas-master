@@ -11,6 +11,7 @@ class Details extends Component {
     }
 
     componentDidMount() {
+        this.props.dispatch({ type: "FETCH_GENRES" })
         this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: this.props.match.params.id })
         this.setState({displayMode:true})
     }

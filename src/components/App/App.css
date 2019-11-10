@@ -35,6 +35,9 @@ em{
 .editIcon{
     margin-right:18px;
 }
+.navGenre{
+    padding-right: 1rem;
+}
 /* .navBar{
     display: flex;
     flex-direction: row;
