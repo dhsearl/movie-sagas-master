@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Button, Columns, Container,  Image, Icon, Level} from 'react-bulma-components'
+import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
 import './DetailsEdit.css'
 
 class DetailsEdit extends Component {
-    state={
-        id:'',
-        title:'',
-        poster:'',
-        description:'',
-        genre:'',
+    state = {
+        id: '',
+        title: '',
+        poster: '',
+        description: '',
+        genre: '',
     }
 
     componentDidMount() {
@@ -19,18 +19,22 @@ class DetailsEdit extends Component {
                 ...this.props.movieDetails[0],
             })
     }
-    handleInputs =(event, value) =>{
+    handleInputs = (event, value) => {
         this.setState({
             ...this.state,
             [value]: event.target.value,
         })
     }
-    handleSaveClick = ()=>{
-        this.props.dispatch({type:'UPDATE_MOVIE_DETAILS', payload: this.state})
-        this.props.dispatch({type:"DISPLAY_MODE_FLIP"});
+    handleGenreDropdown = (selected) => {
+        this.setState({ genre: selected })
     }
-    handleCancelClick = ()=>{
-        this.props.dispatch({type:"DISPLAY_MODE_FLIP"});
+
+    handleSaveClick = () => {
+        this.props.dispatch({ type: 'UPDATE_MOVIE_DETAILS', payload: this.state })
+        this.props.dispatch({ type: "DISPLAY_MODE_FLIP" });
+    }
+    handleCancelClick = () => {
+        this.props.dispatch({ type: "DISPLAY_MODE_FLIP" });
     }
 
     render() {
@@ -38,54 +42,64 @@ class DetailsEdit extends Component {
         const numRows = Math.round(this.props.movie.description.length / 60) + 5;
         return (
             <>
-            <Container className="detailsBox">
-            {/* <pre>Props:{JSON.stringify(this.props,null,2)}</pre>
+                <Container className="detailsBox">
+                    {/* <pre>Props:{JSON.stringify(this.props,null,2)}</pre>
             <pre>State:{JSON.stringify(this.state,null,2)}</pre>
              */}
-                {this.props.movieDetails.length > 0 && <div className="detailsPage">
+                    {this.props.movieDetails.length > 0 && <div className="detailsPage">
 
-                    <Columns>
-                        <Columns.Column
-                            mobile={{
-                                size: 6,
-                            }}
-                            tablet={{
-                                size: 3,
-                            }}>
-                            <Box>
-                                <Image
-                                    src={movie.poster}
-                                    size='2by3'
-                                />
-                            </Box>
-                            <Box>
-                               <Level>
-                            <Button onClick={this.handleSaveClick}>
-                               <Icon color="success">
-                               <i class="far fa-save"></i>
-                            </Icon > <p>Save Edit</p> 
-                            </Button>
-                            <Button onClick={this.handleCancelClick}>
-                               <Icon color="danger">
-                               <i class="far fa-window-close"></i>
-                            </Icon>
-                            </Button>
-                            </Level>
-                            </Box>
-                        </Columns.Column>
-                        <Columns.Column>
-                            <input className="inputTitle" value={this.state.title} onChange={(event)=>this.handleInputs(event,'title')} />
-                            <input className="inputGenre" value={this.state.genre} onChange={(event)=>this.handleInputs(event,'genre')} />                            
-                            <Box
-                            backgroundColor="dark"
-                            textColor="white"
-                            >
-                                <textarea rows={numRows} className="inputTextBox" value={this.state.description} onChange={(event)=>this.handleInputs(event,'description')}  />
-                            </Box>
-                        </Columns.Column>
-                    </Columns>
+                        <Columns>
+                            <Columns.Column
+                                mobile={{
+                                    size: 6,
+                                }}
+                                tablet={{
+                                    size: 3,
+                                }}>
+                                <Box>
+                                    <Image
+                                        src={movie.poster}
+                                        size='2by3'
+                                    />
+                                </Box>
+                                <Box>
+                                    <Level>
+                                        <Button onClick={this.handleSaveClick}>
+                                            <Icon color="success">
+                                                <i className="far fa-save"></i>
+                                            </Icon > <p>Save</p>
+                                        </Button>
+                                        <Button onClick={this.handleCancelClick}>
+                                            <Icon color="danger">
+                                                <i className="far fa-window-close"></i>
+                                            </Icon><p>Cancel</p>
+                                        </Button>
+                                    </Level>
+                                </Box>
+                            </Columns.Column>
+                            <Columns.Column>
+                                <input className="inputTitle" value={this.state.title} onChange={(event) => this.handleInputs(event, 'title')} />
+                                <select
+                                    className="inputGenre"
+                                    onChange={(event) => this.handleInputs(event, 'genre')}
+                                    value={this.state.genre}
+                                >
+                                    {this.props.genres.map(each =>
+                                        <option value={each.name} key={each.id}>
+                                            {each.name}
+                                        </option>
+                                    )}
+                                </select>
+                                <Box
+                                    backgroundColor="dark"
+                                    textColor="white"
+                                >
+                                    <textarea rows={numRows} className="inputTextBox" value={this.state.description} onChange={(event) => this.handleInputs(event, 'description')} />
+                                </Box>
+                            </Columns.Column>
+                        </Columns>
 
-                </div>}
+                    </div>}
                 </Container>
             </>
         )

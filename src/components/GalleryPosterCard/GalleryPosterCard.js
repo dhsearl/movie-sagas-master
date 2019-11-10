@@ -19,7 +19,7 @@ class GalleryPosterCard extends Component {
         const movieDescriptionShort = this.makeShorter(movie.description);
         return (
       
-            <Card style={{ width: "185px", margin: '1rem' }} onClick={() => this.routeToMovieDetails(movie.id)}>
+            <Card style={{ width: "185px", margin: '1rem'  }} onClick={() => this.routeToMovieDetails(movie.id)}>
 
                 <Card.Header>
                     <Card.Header.Title backgroundColor="link">
