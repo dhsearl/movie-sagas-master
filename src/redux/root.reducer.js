@@ -29,18 +29,20 @@ const genres = (state = [], action) => {
             return state;
     }
 }
-const genresPresent = (state =
-    [
-        
-            {
-                array_agg: []
-            }
-        
-    ]
-    , action) => {
+
+
+const genresPresent = (state = [{ array_agg: [] }], action) => {
     switch (action.type) {
         case 'SET_GENRES_PRESENT':
             return action.payload;
+        default:
+            return state;
+    }
+}
+const detailsDisplayReducer = (state = true, action) => {
+    switch (action.type) {
+        case "DISPLAY_MODE_FLIP":
+            return !state;
         default:
             return state;
     }
@@ -52,7 +54,7 @@ const reducers = combineReducers({
     movieDetails,
     genres,
     genresPresent,
-
+    detailsDisplayReducer
 })
 
 export default reducers;

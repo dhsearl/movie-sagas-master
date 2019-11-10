@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Button, Columns, Container,  Image, Icon} from 'react-bulma-components'
+import { Box, Button, Columns, Container,  Image, Icon, Level} from 'react-bulma-components'
 import './DetailsEdit.css'
 
 class DetailsEdit extends Component {
@@ -18,8 +18,6 @@ class DetailsEdit extends Component {
             {
                 ...this.props.movieDetails[0],
             })
-            
-        
     }
     handleInputs =(event, value) =>{
         this.setState({
@@ -27,9 +25,12 @@ class DetailsEdit extends Component {
             [value]: event.target.value,
         })
     }
-    handleEditClick = ()=>{
-        
+    handleSaveClick = ()=>{
         this.props.dispatch({type:'UPDATE_MOVIE_DETAILS', payload: this.state})
+        this.props.dispatch({type:"DISPLAY_MODE_FLIP"});
+    }
+    handleCancelClick = ()=>{
+        this.props.dispatch({type:"DISPLAY_MODE_FLIP"});
     }
 
     render() {
@@ -38,9 +39,9 @@ class DetailsEdit extends Component {
         return (
             <>
             <Container className="detailsBox">
-            <pre>Props:{JSON.stringify(this.props,null,2)}</pre>
+            {/* <pre>Props:{JSON.stringify(this.props,null,2)}</pre>
             <pre>State:{JSON.stringify(this.state,null,2)}</pre>
-            
+             */}
                 {this.props.movieDetails.length > 0 && <div className="detailsPage">
 
                     <Columns>
@@ -58,10 +59,18 @@ class DetailsEdit extends Component {
                                 />
                             </Box>
                             <Box>
-                               
-                            <Icon >
-                            <i className="far fa-edit"></i>
-                            </Icon><Button onClick={this.handleEditClick}>Save Edit</Button>
+                               <Level>
+                            <Button onClick={this.handleSaveClick}>
+                               <Icon color="success">
+                               <i class="far fa-save"></i>
+                            </Icon > <p>Save Edit</p> 
+                            </Button>
+                            <Button onClick={this.handleCancelClick}>
+                               <Icon color="danger">
+                               <i class="far fa-window-close"></i>
+                            </Icon>
+                            </Button>
+                            </Level>
                             </Box>
                         </Columns.Column>
                         <Columns.Column>

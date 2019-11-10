@@ -30,7 +30,9 @@ class _Navbar extends Component {
             <>
     {/* Both the Film icon and the Home buttons only work on paths other than "/" */}
                 <Navbar
-                    color="dark">
+                    color="dark"
+                    fixed="top"
+                    >
                         <Container>
                     <Navbar.Brand>
                         <Navbar.Item

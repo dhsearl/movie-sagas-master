@@ -31,6 +31,9 @@ em{
     font-weight: 100;
     color: rgba(128, 128, 128, 0.605);
 }
+.editIcon{
+    margin-right:18px;
+}
 /* .navBar{
     display: flex;
     flex-direction: row;
