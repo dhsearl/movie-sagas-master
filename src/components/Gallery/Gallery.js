@@ -8,7 +8,8 @@ class Gallery extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: "FETCH_MOVIES" })
-
+        this.props.dispatch({ type: "FETCH_GENRES" })
+        this.props.dispatch({type:'FETCH_GENRES_PRESENT'})
     }
 
 
