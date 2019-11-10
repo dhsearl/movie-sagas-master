@@ -27,23 +27,25 @@ function* fetchMovieByGenreSaga(action) {
         console.log('Error in fetchMovieByGenreSaga', error)
     }
 }
-
-
-
-function* selectPlantSaga(action) {
+function* fetchMovieDetails(action) {
     try {
-        const plants = yield axios.get(`/api/plant/details/${action.payload}`);
-        yield put({ type: "SET_UNIQUE_PLANT", payload: plants.data[0] });
+        console.log('IN FETCH MOVIE DETAILS SAGA');
+
+        const movieDetails = yield axios.get(`/movies/details/${action.payload}`);
+
+        yield put({type: 'SET_MOVIE_DETAILS', payload: movieDetails.data});
+
     } catch (error) {
-        console.log('Error in selectPlantSaga', error);
+        console.log('ERROR in FETCH MOVIE DETAILS SAGA', error);
     }
 }
+
 
 function* rootSaga() {
     yield takeEvery("FETCH_MOVIES", fetchMovieSaga);
     yield takeEvery("FETCH_GENRES", fetchGenresSaga);
     yield takeEvery("FETCH_MOVIES_BY_GENRE", fetchMovieByGenreSaga);
-    yield takeEvery('SELECT_PLANT', selectPlantSaga);
+    yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
 }
 
 

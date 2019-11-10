@@ -10,6 +10,16 @@ const movies = (state = [], action) => {
     }
 }
 
+const movieDetails = (state={}, action) =>{
+    switch (action.type) {
+        case 'SET_MOVIE_DETAILS':
+            console.log('Setting movie details in reducer', action.payload);
+            return action.payload
+        default:
+            return state;
+    }
+}
+
 // Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
@@ -23,6 +33,8 @@ const genres = (state = [], action) => {
 
 const reducers = combineReducers({ 
     movies,
-    genres })
+    genres,
+    movieDetails,
+ })
 
 export default reducers;

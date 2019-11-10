@@ -12,7 +12,7 @@
     text-align: center;
     justify-content: center;
     margin: 1rem;
-    padding-bottom: .5rem;
+    padding-bottom: 1rem;
     width: 200px;
     /* border: 2px solid pink; */
     box-shadow: 5px 5px 3px 2px #222;
@@ -23,17 +23,21 @@
 
 h3 {
     font-family: Roboto;
-    font-weight: 400;
+    font-weight: 300;
 }
-.navBar{
+em{
+    font-weight: 100;
+    color: rgba(128, 128, 128, 0.605);
+}
+/* .navBar{
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
-    /* padding: 2rem 0; */
+    align-items: center;
+   
     min-height: 60px;
 }
 .navElement {
     display: inline;
     padding-left: 1rem;
     padding-right: 1rem;
-}
+} */

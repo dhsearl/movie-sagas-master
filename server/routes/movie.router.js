@@ -24,6 +24,25 @@ router.get('/', (req, res) => {
             res.sendStatus(500);
         })
 })
+router.get('/details/:id', (req, res) => {
+    console.log('movie.router GET hit');
+    const queryText = 
+    `SELECT movies.id, movies.title, genres.name as genre, movies.poster, movies.description
+    FROM movies
+    JOIN movies_genres ON movies.id = movies_genres.movie_id
+    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
+    WHERE movies.id = $1;`
+    const queryArguments = [req.params.id];
+    pool.query(queryText,queryArguments)
+        .then((result) => {
+            console.log('/movies/details/id GET success', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in movie.router details GET', error);
+            res.sendStatus(500);
+        })
+})
 
 router.get('/:id', (req, res) => {
     console.log('movie.router by ID GET hit');
