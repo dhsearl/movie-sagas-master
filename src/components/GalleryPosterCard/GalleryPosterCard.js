@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-
+import { Tile } from 'react-bulma-components'
 class GalleryPosterCard extends Component {
 
     routeToMovieDetails = (id) => {

@@ -3,14 +3,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Columns, Container, Heading, Image, Tile } from 'react-bulma-components'
 
-
 class Details extends Component {
-
     componentDidMount() {
         this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: this.props.match.params.id })
     }
-
-
     render() {
         const movie = this.props.movieDetails[0];
         return (

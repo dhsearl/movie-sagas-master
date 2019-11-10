@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import GalleryPosterCard from '../GalleryPosterCard/GalleryPosterCard';
 import { withRouter } from 'react-router-dom'
+import { Box } from 'react-bulma-components'
 
 class Gallery extends Component {
 
@@ -16,11 +17,12 @@ class Gallery extends Component {
         return (
             
             <div className="gallery" >
-       
+            
+            
                 {this.props.movies.length > 0 &&
                     this.props.movies.map(eachObject =><GalleryPosterCard movieData={eachObject} key={eachObject.id}/>  
                 )}
-                
+               
              </div>
             
         )

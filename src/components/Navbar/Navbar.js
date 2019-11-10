@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Navbar, Button, Dropdown, Icon } from 'react-bulma-components'
+import { Container, Navbar, Button, Dropdown, Icon } from 'react-bulma-components'
 
 
 class _Navbar extends Component {
@@ -27,12 +27,16 @@ class _Navbar extends Component {
 
         return (
             <>
+            {/* Both the Film icon and the Home buttons only work on paths other than "/" */}
                 <Navbar
                     color="dark">
+                        <Container>
                     <Navbar.Brand>
                         <Navbar.Item
-                            onClick={() => { this.props.location.pathname !== "/" && this.props.history.push('/') }}
-                        >
+                            onClick={() => {
+                                this.props.location.pathname !== "/" &&
+                                    this.props.history.push('/')
+                            }}>
                             <Icon size="large">
                                 <i className="fas fa-film fa-2x"></i>
                             </Icon>
@@ -40,9 +44,15 @@ class _Navbar extends Component {
                         <Navbar.Item>
                             <Button
                                 color="info"
-                                onClick={() => { this.props.location.pathname !== "/" && this.props.history.push('/') }} >
-                                Home </Button>
+                                onClick={() => {
+                                    this.props.location.pathname !== "/" &&
+                                        this.props.history.push('/')
+                                }}>
+                                Home
+                            </Button>
                         </Navbar.Item>
+
+                        {/* If on the main path, show the dropdown to select Genres */}
                         {this.props.location.pathname === "/" &&
                             <Navbar.Item >
                                 <Dropdown
@@ -50,7 +60,11 @@ class _Navbar extends Component {
                                     onChange={this.onChange}
                                     value={this.state.selected}
                                 >
-                                    <Dropdown.Item value="default" defaultValue>All genres</Dropdown.Item>
+                                    <Dropdown.Item
+                                        value="default"
+                                        defaultValue>
+                                        All genres
+                                    </Dropdown.Item>
                                     {this.props.genres.map(each =>
                                         <Dropdown.Item value={each.id} key={each.id}>
                                             {each.name}
@@ -60,6 +74,7 @@ class _Navbar extends Component {
                             </Navbar.Item>
                         }
                     </Navbar.Brand>
+                    </Container>
                 </Navbar>
             </>
         )
