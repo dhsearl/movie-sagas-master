@@ -17,10 +17,12 @@
     /* border: 2px solid pink; */
     box-shadow: 5px 5px 3px 2px #222;
 }
-/* .movieCard:hover{
-    width: 600px;
-} */
-
+.movieCard:hover{
+    width: 202px;
+}
+.detailsPage{
+    padding:1.5rem;
+}
 h3 {
     font-family: Roboto;
     font-weight: 300;

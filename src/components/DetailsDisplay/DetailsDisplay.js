@@ -2,18 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Columns, Heading, Image, Icon } from 'react-bulma-components'
-import DetailsEdit from '../DetailsEdit/DetailsEdit';
 
 class Details extends Component {
     state={
         displayMode:true,
-
-    }
-
-    componentDidMount() {
-        this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: this.props.match.params.id })
-        
-        this.setState({displayMode:true})
     }
 
     
@@ -21,8 +13,7 @@ class Details extends Component {
         const movie = this.props.movieDetails[0];
         return (
             <>
-            {movie && <DetailsEdit movie={movie}/>}
-            {/* <Box className="detailsBox">
+            <Box className="detailsBox">
             
                 {this.props.movieDetails.length > 0 && <div className="detailsPage">
 
@@ -73,7 +64,7 @@ class Details extends Component {
                         </Columns.Column>
                     </Columns>
 
-                </div>}</Box> */}
+                </div>}</Box>
             </>
         )
     }
