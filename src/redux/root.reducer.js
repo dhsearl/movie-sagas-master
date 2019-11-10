@@ -10,7 +10,7 @@ const movies = (state = [], action) => {
     }
 }
 
-const movieDetails = (state={}, action) =>{
+const movieDetails = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIE_DETAILS':
             console.log('Setting movie details in reducer', action.payload);
@@ -29,12 +29,30 @@ const genres = (state = [], action) => {
             return state;
     }
 }
+const genresPresent = (state =
+    [
+        
+            {
+                array_agg: []
+            }
+        
+    ]
+    , action) => {
+    switch (action.type) {
+        case 'SET_GENRES_PRESENT':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 
-const reducers = combineReducers({ 
+const reducers = combineReducers({
     movies,
-    genres,
     movieDetails,
- })
+    genres,
+    genresPresent,
+
+})
 
 export default reducers;

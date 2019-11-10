@@ -27,10 +27,5 @@ class App extends Component {
     }
 }
 
-
-// const mapReduxStateToProps = (reduxState) => {
-//     return reduxState
-// }
-// export default connect(mapReduxStateToProps)(App);
 export default App;
 

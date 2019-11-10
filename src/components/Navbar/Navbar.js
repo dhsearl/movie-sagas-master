@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Container, Navbar, Button, Dropdown, Icon } from 'react-bulma-components'
+import { Container, Navbar, Button, Dropdown, Icon, Section, Tab } from 'react-bulma-components'
 
 
 class _Navbar extends Component {
@@ -11,6 +11,7 @@ class _Navbar extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: "FETCH_GENRES" })
+        this.props.dispatch({type:'FETCH_GENRES_PRESENT'})
     }
 
     onChange = (selected) => {
@@ -27,7 +28,7 @@ class _Navbar extends Component {
 
         return (
             <>
-            {/* Both the Film icon and the Home buttons only work on paths other than "/" */}
+    {/* Both the Film icon and the Home buttons only work on paths other than "/" */}
                 <Navbar
                     color="dark">
                         <Container>
@@ -52,7 +53,7 @@ class _Navbar extends Component {
                             </Button>
                         </Navbar.Item>
 
-                        {/* If on the main path, show the dropdown to select Genres */}
+    {/* If on the main path, show the dropdown to select Genres */}
                         {this.props.location.pathname === "/" &&
                             <Navbar.Item >
                                 <Dropdown
@@ -65,8 +66,9 @@ class _Navbar extends Component {
                                         defaultValue>
                                         All genres
                                     </Dropdown.Item>
+    {/* Changed this line for the genre by genre name route test */}
                                     {this.props.genres.map(each =>
-                                        <Dropdown.Item value={each.id} key={each.id}>
+                                        <Dropdown.Item value={each.name} key={each.id}>
                                             {each.name}
                                         </Dropdown.Item>
                                     )}
@@ -76,6 +78,15 @@ class _Navbar extends Component {
                     </Navbar.Brand>
                     </Container>
                 </Navbar>
+                {this.props.location.pathname === "/" &&
+                <Section backgroundColor="warning">
+                <Container> {this.props.genresPresent[0].array_agg.length> 0 && 
+                    this.props.genresPresent[0].array_agg.map( 
+                        eachGenre => 
+                        <span style={{paddingRight:"1rem"}} key={eachGenre}>{eachGenre}</span> )}</Container>
+                    {/* <pre>{JSON.stringify(this.props.genresPresent[0].array_agg,null,2)}</pre> */}
+                    
+                </Section>}
             </>
         )
     }
