@@ -19,6 +19,7 @@ class DetailsEdit extends Component {
                 ...this.props.movieDetails[0],
             })
     }
+
     handleInputs = (event, value) => {
         this.setState({
             ...this.state,
@@ -28,6 +29,7 @@ class DetailsEdit extends Component {
     handleGenreDropdown = (selected) => {
         this.setState({ genre: selected })
     }
+
 
     handleSaveClick = () => {
         this.props.dispatch({ type: 'UPDATE_MOVIE_DETAILS', payload: this.state })
@@ -43,9 +45,6 @@ class DetailsEdit extends Component {
         return (
             <>
                 <Container className="detailsBox">
-                    {/* <pre>Props:{JSON.stringify(this.props,null,2)}</pre>
-            <pre>State:{JSON.stringify(this.state,null,2)}</pre>
-             */}
                     {this.props.movieDetails.length > 0 && <div className="detailsPage">
 
                         <Columns>

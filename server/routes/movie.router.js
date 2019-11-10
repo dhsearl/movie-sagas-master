@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/details/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     console.log('movie.router GET hit');
     const queryText = 
     `SELECT movies.id, movies.title, genres.name as genre, movies.poster, movies.description
@@ -43,7 +43,7 @@ router.get('/details/:id', (req, res) => {
         })
 })
 
-router.put('/details', (req,res)=>{
+router.put('/', (req,res)=>{
     console.log('movie.router PUT hit');
     console.log(req.body);
     const queryText = `
@@ -72,27 +72,27 @@ router.put('/details', (req,res)=>{
     })
 }) // END of PUT request
 
-router.get('/:genre', (req, res) => {
-    console.log('movie.router by Genre Name GET hit');
+// router.get('/:genre', (req, res) => {
+//     console.log('movie.router by Genre Name GET hit', req.params.genre);
     
-    const queryText = 
-    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
-    FROM movies
-    JOIN movies_genres ON movies.id = movies_genres.movie_id
-    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
-    WHERE genres.name = $1
-    ORDER BY movies.title;`
-    const queryArguments = [req.params.genre]
-    pool.query(queryText, queryArguments)
-        .then((result) => {
-            console.log('/movies/id GET success', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('Error in movie.router GET', error);
-            res.sendStatus(500);
-        })
-})
+//     const queryText = 
+//     `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
+//     FROM movies
+//     JOIN movies_genres ON movies.id = movies_genres.movie_id
+//     LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
+//     WHERE genres.name = $1
+//     ORDER BY movies.title;`
+//     const queryArguments = [req.params.genre]
+//     pool.query(queryText, queryArguments)
+//         .then((result) => {
+//             console.log('/movies/id GET success', result.rows);
+//             res.send(result.rows);
+//         })
+//         .catch((error) => {
+//             console.log('Error in movie.router GET', error);
+//             res.sendStatus(500);
+//         })
+// })
 
 // Depreciated so the array of used genres is more intuitively laid out in the nav bar
 //

@@ -1,4 +1,5 @@
 .gallery {
+    position: absolute;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -34,6 +35,12 @@ em{
 .editIcon{
     margin-right:18px;
 }
+.navGenre{
+    padding-right: 1rem;
+}
+.navGenre:hover{
+    color: whitesmoke;
+}
 /* .navBar{
     display: flex;
     flex-direction: row;
@@ -46,3 +53,47 @@ em{
     padding-left: 1rem;
     padding-right: 1rem;
 } */
+.fade-appear,
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms linear 150ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.page {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+}
+
+  /* .example-enter {
+    opacity: 0.01;
+  }
+  
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  
+  .example-leave {
+    opacity: 1;
+  }
+  
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  } */
