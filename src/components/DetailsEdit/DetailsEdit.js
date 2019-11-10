@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
-import './DetailsEdit.css'
+// import './DetailsEdit.css'
 
 class DetailsEdit extends Component {
     state = {
