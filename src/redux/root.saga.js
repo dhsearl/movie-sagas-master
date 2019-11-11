@@ -1,14 +1,9 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from "axios";
 
-function* fetchMovieSaga() {
-    try {
-        const movies = yield axios.get('/movies');
-        yield put({ type: 'SET_MOVIES', payload: movies.data })
-    } catch (error) {
-        console.log('Error in fetchMovieSaga', error)
-    }
-}
+// Alphabetical Saga List
+
+
 // This will set GENRES to ALL possible genres 
 //  This is used in the Navbar dropdown
 //  Found in the table genres
@@ -19,18 +14,39 @@ function* fetchGenresSaga() {
     } catch (error) {
         console.log('fetchGenresSaga had an error', error);
     }
-}
+}  // END
+
 // This will get all distinct Genres 
 //  This is use in the Section below the Navbar
 //  Found in the movie table joined to their genre name
 function* fetchGenresPresent() {
     try {
         const genres = yield axios.get('/genres/present')
-        yield put({ type: 'SET_GENRES_PRESENT', payload: genres.data })
+        yield put({ type: 'SET_GENRES_PRESENT', payload: genres.data[0].genres })
     } catch (error) {
         console.log('Error in Set Genres Present Saga', error);
     }
-}
+} // END
+
+function* fetchGenresOf(action) {
+    try {
+        const genres = yield axios.get(`/genres/of/${action.payload}`);
+        yield put({ type: 'SET_GENRES_DETAILS', payload: genres.data[0]})
+    } catch (error) {
+        console.log(`Error in Set Genres Details Saga`, error);
+    }
+} // END
+
+// This is used as the main display of the gallery
+//  Gets then sets them all
+function* fetchMovieSaga() {
+    try {
+        const movies = yield axios.get('/movies');
+        yield put({ type: 'SET_MOVIES', payload: movies.data })
+    } catch (error) {
+        console.log('Error in fetchMovieSaga', error)
+    }
+} // END
 
 // This is used in Navbar.
 //  The payload is a string of genre name.
@@ -43,40 +59,37 @@ function* fetchMovieByGenreSaga(action) {
     } catch (error) {
         console.log('Error in fetchMovieByGenreSaga', error)
     }
-}
+} // END
 
 // This is used in Details 
 //   This sets the current reducer with the details we need.
 function* fetchMovieDetails(action) {
     try {
-        console.log('IN FETCH MOVIE DETAILS SAGA' );
+        console.log('IN FETCH MOVIE DETAILS SAGA');
         const movieDetails = yield axios.get(`/movies/${action.payload}`);
         console.log(movieDetails.data);
         yield put({ type: 'SET_MOVIE_DETAILS', payload: movieDetails.data });
     } catch (error) {
         console.log('ERROR in FETCH MOVIE DETAILS SAGA', error);
     }
-}
+} // END
+
 function* updateMovieDetails(action) {
-    try{
-        console.log('IN UPDATE MOVIE DETAILS SAGA' );
+    try {
+        console.log('IN UPDATE MOVIE DETAILS SAGA');
         yield axios.put(`/movies`, action.payload)
-        yield put({type:'FETCH_MOVIE_DETAILS', payload: action.payload.id});
-    } catch (error){
+        yield put({ type: 'FETCH_MOVIE_DETAILS', payload: action.payload.id });
+    } catch (error) {
         console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);
     }
-}
-
-
+} // END
 function* rootSaga() {
-    yield takeEvery("FETCH_MOVIES", fetchMovieSaga);
     yield takeEvery("FETCH_GENRES", fetchGenresSaga);
     yield takeEvery("FETCH_GENRES_PRESENT", fetchGenresPresent);
+    yield takeEvery("FETCH_GENRES_OF", fetchGenresOf);
+    yield takeEvery("FETCH_MOVIES", fetchMovieSaga);
     yield takeEvery("FETCH_MOVIES_BY_GENRE", fetchMovieByGenreSaga);
     yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
     yield takeEvery('UPDATE_MOVIE_DETAILS', updateMovieDetails);
-}
-
-
-
+}  // END
 export default rootSaga;

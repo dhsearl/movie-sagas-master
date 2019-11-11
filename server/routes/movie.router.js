@@ -4,13 +4,12 @@ const pool = require('../modules/pool');
 
 // put / update details of movies
 
+// GET request of ALL movies
 router.get('/', (req, res) => {
     console.log('movie.router GET hit');
     const queryText = 
-    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
+    `SELECT movies.id, movies.title, movies.poster, movies.description 
     FROM movies
-    JOIN movies_genres ON movies.id = movies_genres.movie_id
-    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
     ORDER BY movies.id;`
     pool.query(queryText)
         .then((result) => {
@@ -22,14 +21,12 @@ router.get('/', (req, res) => {
             res.sendStatus(500);
         })
 })
-
+// Get request for Movie Details (without Genres)
 router.get('/:id', (req, res) => {
     console.log('movie.router GET hit');
     const queryText = 
-    `SELECT movies.id, movies.title, genres.name as genre, movies.poster, movies.description
+    `SELECT movies.id, movies.title, movies.poster, movies.description
     FROM movies
-    JOIN movies_genres ON movies.id = movies_genres.movie_id
-    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
     WHERE movies.id = $1;`
     const queryArguments = [req.params.id];
     pool.query(queryText,queryArguments)

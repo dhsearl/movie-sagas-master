@@ -5,17 +5,15 @@ import { Container, Navbar, Button, Dropdown, Icon, Section, Tab } from 'react-b
 
 
 class Navigation extends Component {
-    // Using state to track the default state of the dropdown
+    // Using state to track the default state of the ~dropdown~ sub-nav
     // Making a selection hits a different Saga/Reducer
     state = {
         selected: 'default'
     }
+
     // Refreshing Genres_Present
-    // Commented out all Genres for now, moved to Details component
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_GENRES_PRESENT' })
-        // this.props.dispatch({ type: "FETCH_GENRES" })
-
     }
     // Handle Change of Genre Dropdown
     // Only shows movies of that genre
@@ -42,6 +40,10 @@ class Navigation extends Component {
         })
         this.props.dispatch({ type: "FETCH_MOVIES" })
     }
+    menuClick = () =>{
+        this.allGenre();
+        if (this.props.location.pathname !== "/") this.props.history.push('/');
+    }
 
     render() {
 
@@ -55,10 +57,7 @@ class Navigation extends Component {
                     <Container>
                         <Navbar.Brand>
                             <Navbar.Item
-                                onClick={() => { this.setState({selected:'default'})
-                                    this.props.location.pathname !== "/" &&
-                                        this.props.history.push('/')
-                                }}>
+                                onClick={this.menuClick}>
                                 <Icon size="large">
                                     <i className="fas fa-film fa-2x"></i>
                                 </Icon>
@@ -66,17 +65,14 @@ class Navigation extends Component {
                             <Navbar.Item>
                                 <Button
                                     color="info"
-                                    onClick={() => {
-                                        this.props.location.pathname !== "/" &&
-                                            this.props.history.push('/')
-                                    }}>
+                                    onClick={this.menuClick}>
                                     Home
                             </Button>
                             </Navbar.Item>
 
                             {/* If on the main path, show the dropdown to select Genres */}
                             {this.props.location.pathname === "/" &&
-                                this.props.genresPresent[0] &&
+                                this.props.genresPresent &&
                                 (
                                     <Navbar.Item >
                                         <Dropdown
@@ -90,7 +86,7 @@ class Navigation extends Component {
                                                 All genres
                                     </Dropdown.Item>
                                             {/* Changed this line for the genre by genre name route test */}
-                                            {this.props.genresPresent[0].array_agg.map(each =>
+                                            {this.props.genresPresent.map(each =>
                                                 <Dropdown.Item value={each} key={each}>
                                                     {each}
                                                 </Dropdown.Item>
@@ -109,8 +105,8 @@ class Navigation extends Component {
                             style={{color: 'default'===this.state.selected && '#5ccd50'}}
                             onClick={this.allGenre}
                         >All</span>
-                        {this.props.genresPresent[0].array_agg.length > 0 &&
-                            this.props.genresPresent[0].array_agg.map(
+                        {this.props.genresPresent.length > 0 &&
+                            this.props.genresPresent.map(
                                 eachGenre =>
                                     <span
                                         className="navGenre"

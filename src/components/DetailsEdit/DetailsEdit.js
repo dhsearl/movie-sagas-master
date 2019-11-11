@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
-// import './DetailsEdit.css'
 
 class DetailsEdit extends Component {
     state = {
@@ -10,13 +9,13 @@ class DetailsEdit extends Component {
         title: '',
         poster: '',
         description: '',
-        genre: '',
+        genre: [],
     }
 
     componentDidMount() {
         this.setState(
             {
-                ...this.props.movieDetails[0],
+                ...this.props.movie,
             })
     }
 
@@ -41,11 +40,12 @@ class DetailsEdit extends Component {
 
     render() {
         const movie = this.props.movie;
-        const numRows = Math.round(this.props.movie.description.length / 60) + 5;
+        const numRows = Math.round(movie.description.length / 60) + 5;
         return (
             <>
+                <pre>movie props as they come to details{JSON.stringify(this.props.movie, null, 2)}</pre>
                 <Container className="detailsBox">
-                    {this.props.movieDetails.length > 0 && <div className="detailsPage">
+                    {movie &&
 
                         <Columns>
                             <Columns.Column
@@ -60,6 +60,20 @@ class DetailsEdit extends Component {
                                         src={movie.poster}
                                         size='2by3'
                                     />
+                                </Box>
+                                <Box>
+                                    {movie.genres ?
+                                        movie.genres.map(each => 
+                                            <Level>
+                                            <p>{each}</p>
+                                            <Button>
+                                                <Icon color="danger">
+                                                    <i className="far fa-window-close"></i>
+                                                </Icon>
+                                            </Button>
+                                            </Level>
+                                        ) : <p>Uncategorized</p>
+                                    }
                                 </Box>
                                 <Box>
                                     <Level>
@@ -97,8 +111,7 @@ class DetailsEdit extends Component {
                                 </Box>
                             </Columns.Column>
                         </Columns>
-
-                    </div>}
+                    }
                 </Container>
             </>
         )

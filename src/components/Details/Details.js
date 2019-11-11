@@ -11,19 +11,25 @@ class Details extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch({ type: "FETCH_GENRES" })
-        this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: this.props.match.params.id })
+        const movie_id = this.props.match.params.id;
+        this.props.dispatch({ type: "FETCH_GENRES" }) // for the dropdown
+        this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: movie_id }) // for the page
+        this.props.dispatch({ type: "FETCH_GENRES_OF", payload: movie_id}) // for the display of multiple genres
         this.setState({displayMode:true})
     }
 
     
     render() {
-        const movie = this.props.movieDetails[0];
+        const movie = {... this.props.movieDetails, ...this.props.detailsGenreReducer};
         return (
             <>
             <div className="page">
+                <pre>movieDetails:{JSON.stringify(this.props.movieDetails,null,2)}</pre>
+                
             {/* {movie && (movie.id ===Number(this.props.location.pathname.slice(1,)) && (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>))} */}
-            {this.state.displayMode && (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>)}
+            {this.state.displayMode && 
+            movie.id===Number(this.props.location.pathname.slice(1,)) && 
+            (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>)}
             </div>
             </>
         )
