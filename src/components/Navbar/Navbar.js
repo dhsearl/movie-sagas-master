@@ -36,6 +36,7 @@ class Navigation extends Component {
     menuClick = () =>{
         this.allGenre();
         if (this.props.location.pathname !== "/") this.props.history.push('/');
+        this.props.dispatch({ type: "SET_TO_DISPLAY" });
     }
 
     render() {

@@ -15,6 +15,7 @@ class Details extends Component {
         this.props.dispatch({ type: "FETCH_MOVIE_DETAILS", payload: movie_id }) // for the page
         this.props.dispatch({ type: "FETCH_GENRES_OF", payload: movie_id}) // for the display of multiple genres
         this.setState({displayMode:true})
+        // this.props.dispatch({ type: "SET_TO_DISPLAY" });
     }
 
     

@@ -6,6 +6,8 @@ const detailsDisplayReducer = (state = true, action) => {
     switch (action.type) {
         case "DISPLAY_MODE_FLIP":
             return !state;
+        case "SET_TO_DISPLAY":
+            return true;
         default:
             return state;
     }
