@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Container, Navbar, Heading, Icon, Section, Dropdown } from 'react-bulma-components'
+import { Container, Navbar, Heading, Icon, Section, Dropdown, Level } from 'react-bulma-components'
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
@@ -30,7 +30,9 @@ class Navigation extends Component {
         this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: genre })
     }
     byRating = (selected) =>{
-        this.props.dispatch({ type: "FETCH_MOVIES_BY_RATING", payload: selected })
+        console.log(selected);
+        if(selected==="default")  this.props.dispatch({ type: "FETCH_MOVIES" })
+        else this.props.dispatch({ type: "FETCH_MOVIES_BY_RATING", payload: selected })
     }
     allGenre = () => {
         this.setState({
@@ -51,9 +53,10 @@ class Navigation extends Component {
             <>
                 <Navbar
                     color="success"
-                    fixed="top"
+                    // fixed="top"
                 >
                     <Container>
+                        <Level>
                         <Navbar.Brand>
                             <Navbar.Item
                                 onClick={this.menuClick}>
@@ -63,7 +66,7 @@ class Navigation extends Component {
                             </Navbar.Item>
                             <Navbar.Item onClick={this.menuClick}> <Heading size={2}>Prime Movie Time</Heading></Navbar.Item>
                         </Navbar.Brand>
-                        <Navbar.Container>
+                        
                             <Navbar.Item >
                                 <Dropdown
                                     color="success"
@@ -83,7 +86,7 @@ class Navigation extends Component {
                                     )}
                                 </Dropdown>
                             </Navbar.Item>
-                        </Navbar.Container>
+                            </Level>
                     </Container>
                 </Navbar>
 
