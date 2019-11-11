@@ -37,6 +37,24 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
         })
 })// END 
+router.get('/star/:rating', (req, res) => {
+    console.log('movie.router by Rating GET hit', req.params.rating);
+    const queryText = 
+    `SELECT movies.id, movies.title, movies.poster, movies.description, movies.rating
+    FROM movies
+    WHERE movies.rating = $1
+    ORDER BY movies.rating DESC, movies.id ASC;`
+    const queryArguments = [req.params.rating]
+    pool.query(queryText, queryArguments)
+        .then((result) => {
+            console.log('/movies/id GET success', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in movie.router GET', error);
+            res.sendStatus(500);
+        })
+}) // END
 // Put request to update title and description
 router.put('/', (req, res) => {
     console.log('movie.router PUT hit');

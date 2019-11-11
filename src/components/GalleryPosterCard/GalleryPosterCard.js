@@ -24,7 +24,7 @@ class GalleryPosterCard extends Component {
 
                 <Card.Header>
                     <Card.Header.Title backgroundColor="link">
-                    <Rater color="#FEd847" total={5} rating={movie.rating} interactive={false} onRate={(click)=>this.handleRating(click)}/>
+                    <Rater total={5} rating={movie.rating} interactive={false} onRate={(click)=>this.handleRating(click)}/>
                     </Card.Header.Title>
                 </Card.Header>
                 <span onClick={() => this.routeToMovieDetails(movie.id)}>

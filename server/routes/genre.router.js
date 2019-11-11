@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
 router.get('/by/:genre', (req, res) => {
     console.log('movie.router by Genre Name GET hit', req.params.genre);
     const queryText = 
-    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
+    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description, movies.rating 
     FROM movies
     JOIN movies_genres ON movies.id = movies_genres.movie_id
     LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
