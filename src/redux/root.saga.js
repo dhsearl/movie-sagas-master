@@ -1,8 +1,8 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from "axios";
 const verbose = false;
-// Alphabetical Saga List
 
+// Alphabetical Saga List
 
 // This will set GENRES to ALL possible genres 
 //  This is used in the Navbar dropdown
