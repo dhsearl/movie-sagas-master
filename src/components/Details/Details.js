@@ -20,7 +20,7 @@ class Details extends Component {
 
     
     render() {
-        const movie = {... this.props.movieDetails, ...this.props.detailsGenreReducer};
+        const movie = {...this.props.movieDetails, ...this.props.detailsGenreReducer};
         return (
             <>
             <div className="page">

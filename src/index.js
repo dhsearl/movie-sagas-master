@@ -5,7 +5,11 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware } from 'redux';
 // Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
+
+// VERBOSE MODE - uncomment  loger ^here and at at bottom of page     ||
+//                                                                      \/
+
 
 // CSS
 import './index.scss'
@@ -14,8 +18,7 @@ import 'react-bulma-components/dist/react-bulma-components.min.css';
 import rootReducer from './redux/root.reducer'
 import rootSaga from './redux/root.saga'
 
-// VERBOSE MODE - uncomment the loger at bottom of page ||
-//                                                      \/
+
 
 
 // Import saga middleware
@@ -29,7 +32,7 @@ const storeInstance = createStore(
     rootReducer,
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, 
-        // logger                                     // HERE
+        // logger                                                   // HERE!
         ),
 );
 
