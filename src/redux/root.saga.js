@@ -70,7 +70,15 @@ function* fetchMovieByGenreSaga(action) {
         console.log('Error in fetchMovieByGenreSaga', error)
     }
 } // END
-
+function* fetchMovieByRatingSaga(action) {
+    try {
+        console.log('IN FETCH MOVIES BY RATING SAGA');
+        const moviesBy = yield axios.get(`/movies/star/${action.payload}`);
+        yield put({ type: 'SET_MOVIES', payload: moviesBy.data })
+    } catch (error) {
+        console.log('Error in fetchMovieByGenreSaga', error)
+    }
+} // END
 // This is used in Details 
 //   This sets the current reducer with the details we need.
 function* fetchMovieDetails(action) {
@@ -119,6 +127,7 @@ function* rootSaga() {
     yield takeEvery("FETCH_GENRES_OF", fetchGenresOf);
     yield takeEvery("FETCH_MOVIES", fetchMovieSaga);
     yield takeEvery("FETCH_MOVIES_BY_GENRE", fetchMovieByGenreSaga);
+    yield takeEvery("FETCH_MOVIES_BY_RATING", fetchMovieByRatingSaga);
     yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
     yield takeEvery('REMOVE_GENRE_FROM', removeGenreFrom);
     yield takeEvery('UPDATE_MOVIE_DETAILS', updateMovieDetails);

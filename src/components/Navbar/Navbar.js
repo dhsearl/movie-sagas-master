@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Container, Navbar, Button, Heading, Icon, Section, Tab } from 'react-bulma-components'
+import { Container, Navbar, Heading, Icon, Section, Dropdown } from 'react-bulma-components'
 
 
 
@@ -57,6 +57,11 @@ class Navigation extends Component {
                             </Navbar.Item>
                            <Navbar.Item onClick={this.menuClick}> <Heading size={2}>Prime Movie Time</Heading></Navbar.Item>
                         </Navbar.Brand>
+                        <Navbar.Container>
+                            <Dropdown>
+
+                            </Dropdown>
+                        </Navbar.Container>
                     </Container>
                 </Navbar>
 
