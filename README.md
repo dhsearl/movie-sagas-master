@@ -5,38 +5,31 @@ Duration: Weekend Sprint
 
 To see the fully functional site, please visit:   [DEPLOYED VERSION OF FEEDBACK LOOP](http://movies.searl.org/)
 
+Need a movie gallery? Here's one. This application displays movies from a database querying the server for movie details, matching them to a genre table to display genres and allowing users to edit the information on the page.
 
+## The hardest parts of the project were
+### Learning a new styling framework
+I started the project in Grommet, then moved to react-bulma-components and regret both :)  I will revamp the page in the future to either use regular Bulma or Material-ui for the few places I need styling.  
 
+### Adding multiple genre functionality
+I started the project with only one genre per movie - and I liked it that way. Adding this in changed how the genre edit worked and took some time to sort out. I'm happy with the product but the lesson I learned is not being attached to how cool one component looks/works if it doesn't solve the requirements.
 
-### The coolest features of this application are
-
-
-## Notes on a few of these
-
-### Redux State
-
-
-### Input Sliders
-  
-
-
-### Material Table
-
+## Usage
+Main gallery lets you filter by rating or genre.
+Movie details page lets you see description, genres and change ratings.
+Movie edit page lets you edit title, description, add/remove genres, and update ratings.
 
 
 ## Screen Shots
 
-#### Input
-![Input Sliders](/screenshots/stepper.png)
+#### Movie Gallery
+![Main](/screenshots/main.png)
 
-#### Mobile Responsive
-![Input Sliders](/screenshots/mobile.png)
+#### Sorting by Rating
+![Star Ratings](/screenshots/star.png)
 
-#### User Review
-![Review Page](/screenshots/review.png)
-
-#### Administrator View
-![Administrator View](/screenshots/admin.png)
+#### Edit Mode
+![Adding a Genre](/screenshots/edit.png)
 
 ## Prerequisites
 
@@ -56,11 +49,6 @@ You can view the deployed version on Heroku  [Prime Movie Time](http://movies.se
   * CREATE TABLE instructions included for `movies`,`genres`, and junction `movies_genres`
 4. run `npm run server` to start the server
 5. then run `npm run client` to start the client.  React will open up a browser when the project loads.
-
-## Usage
-Main gallery lets you filter by rating or genre.
-Movie details page lets you see description, genres and change ratings.
-Movie edit page lets you edit title, description, add/remove genres, and update ratings.
 
 ## Built With
 

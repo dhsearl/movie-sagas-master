@@ -1,9 +1,11 @@
-CREATE TABLE "movies" (
-  "id" SERIAL PRIMARY KEY,
-  "title" VARCHAR(120) NOT NULL,
-  "poster"  VARCHAR(120) NOT NULL,
-  "description" TEXT NOT NULL
-);
+-- Regular Version
+-- CREATE TABLE "movies" (
+--   "id" SERIAL PRIMARY KEY,
+--   "title" VARCHAR(120) NOT NULL,
+--   "poster"  VARCHAR(120) NOT NULL,
+--   "description" TEXT NOT NULL
+-- );
+
 -- Heroku version
 CREATE TABLE "movies" (
   "id" SERIAL PRIMARY KEY,
@@ -13,7 +15,7 @@ CREATE TABLE "movies" (
   "rating" INT DEFAULT 3
 );
 
--- movies can have multiple genres
+-- Movies can have multiple genres
 CREATE TABLE "genres" (
   "id" SERIAL PRIMARY KEY,
   "name" VARCHAR(80) NOT NULL
@@ -23,8 +25,8 @@ CREATE TABLE "genres" (
 -- CREATE JUNCTION TABLE
 CREATE TABLE "movies_genres"(
 	"id" SERIAL PRIMARY KEY,
-	"movie_id" INT,
-	"genre_id" INT
+	"movie_id" INT NOT NULL,
+	"genre_id" INT NOT NULL
 );
 
 
