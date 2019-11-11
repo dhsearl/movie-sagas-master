@@ -53,7 +53,7 @@ class Navigation extends Component {
             <>
                 <Navbar
                     color="success"
-                    // fixed="top"
+                    fixed="top"
                 >
                     <Container>
                         <Level>
