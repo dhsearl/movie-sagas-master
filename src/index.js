@@ -14,6 +14,9 @@ import 'react-bulma-components/dist/react-bulma-components.min.css';
 import rootReducer from './redux/root.reducer'
 import rootSaga from './redux/root.saga'
 
+// VERBOSE MODE - uncomment the loger at bottom of page ||
+//                                                      \/
+
 
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
@@ -25,7 +28,9 @@ const sagaMiddleware = createSagaMiddleware();
 const storeInstance = createStore(
     rootReducer,
     // Add sagaMiddleware to our store
-    applyMiddleware(sagaMiddleware, logger),
+    applyMiddleware(sagaMiddleware, 
+        // logger                                     // HERE
+        ),
 );
 
 // Pass rootSaga into our sagaMiddleware

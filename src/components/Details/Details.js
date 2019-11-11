@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import DetailsEdit from '../DetailsEdit/DetailsEdit';
 import DetailsDisplay from '../DetailsDisplay/DetailsDisplay'
-import { Container, Section } from 'react-bulma-components'
+
 class Details extends Component {
     state={
         displayMode:false,
@@ -28,6 +28,7 @@ class Details extends Component {
             {this.state.displayMode && 
             movie.id===Number(this.props.location.pathname.slice(1,)) && 
             (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>)}
+
             </div>
             </>
         )

@@ -9,7 +9,7 @@ class GalleryPosterCard extends Component {
     routeToMovieDetails = (id) => {
         this.props.history.push(`/${id}`)
     }
-
+    // Handles the text on the card
     makeShorter = (description) => {
         if (description.length > 144) return description.slice(0, 144) + "..."
         else return description

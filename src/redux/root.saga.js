@@ -1,6 +1,6 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from "axios";
-
+const verbose = false;
 // Alphabetical Saga List
 
 
@@ -13,7 +13,7 @@ function* addGenreSaga(action) {
         yield axios.put('/genres/add', action.payload)
         yield put({type: "FETCH_GENRES_OF", payload: action.payload.id})
     } catch(error) {
-        console.log('Add Genre Saga Error', error);
+        if(verbose)console.log('Add Genre Saga Error', error);
     }
 } // END
 
@@ -22,7 +22,7 @@ function* fetchGenresSaga() {
         const genres = yield axios.get('/genres');
         yield put({ type: 'SET_GENRES', payload: genres.data })
     } catch (error) {
-        console.log('fetchGenresSaga had an error', error);
+        if(verbose)console.log('fetchGenresSaga had an error', error);
     }
 }  // END
 
@@ -34,7 +34,7 @@ function* fetchGenresPresent() {
         const genres = yield axios.get('/genres/present')
         yield put({ type: 'SET_GENRES_PRESENT', payload: genres.data[0].genres })
     } catch (error) {
-        console.log('Error in Set Genres Present Saga', error);
+        if(verbose)console.log('Error in Set Genres Present Saga', error);
     }
 } // END
 
@@ -43,7 +43,7 @@ function* fetchGenresOf(action) {
         const genres = yield axios.get(`/genres/of/${action.payload}`);
         yield put({ type: 'SET_GENRES_DETAILS', payload: genres.data[0]})
     } catch (error) {
-        console.log(`Error in Set Genres Details Saga`, error);
+        if(verbose)console.log(`Error in Set Genres Details Saga`, error);
     }
 } // END
 
@@ -54,7 +54,7 @@ function* fetchMovieSaga() {
         const movies = yield axios.get('/movies');
         yield put({ type: 'SET_MOVIES', payload: movies.data })
     } catch (error) {
-        console.log('Error in fetchMovieSaga', error)
+        if(verbose)console.log('Error in fetchMovieSaga', error)
     }
 } // END
 
@@ -63,60 +63,60 @@ function* fetchMovieSaga() {
 //  There is a server route for the genre ID build but is depreciated
 function* fetchMovieByGenreSaga(action) {
     try {
-        console.log('IN FETCH MOVIES SAGA');
+        if(verbose)console.log('IN FETCH MOVIES SAGA');
         const moviesBy = yield axios.get(`/genres/by/${action.payload}`);
         yield put({ type: 'SET_MOVIES', payload: moviesBy.data })
     } catch (error) {
-        console.log('Error in fetchMovieByGenreSaga', error)
+        if(verbose)console.log('Error in fetchMovieByGenreSaga', error)
     }
 } // END
 function* fetchMovieByRatingSaga(action) {
     try {
-        console.log('IN FETCH MOVIES BY RATING SAGA');
+        if(verbose)console.log('IN FETCH MOVIES BY RATING SAGA');
         const moviesBy = yield axios.get(`/movies/star/${action.payload}`);
         yield put({ type: 'SET_MOVIES', payload: moviesBy.data })
     } catch (error) {
-        console.log('Error in fetchMovieByGenreSaga', error)
+        if(verbose)console.log('Error in fetchMovieByGenreSaga', error)
     }
 } // END
 // This is used in Details 
 //   This sets the current reducer with the details we need.
 function* fetchMovieDetails(action) {
     try {
-        console.log('IN FETCH MOVIE DETAILS SAGA');
+        if(verbose)console.log('IN FETCH MOVIE DETAILS SAGA');
         const movieDetails = yield axios.get(`/movies/${action.payload}`);
-        console.log(movieDetails.data);
+        if(verbose)console.log(movieDetails.data);
         yield put({ type: 'SET_MOVIE_DETAILS', payload: movieDetails.data });
     } catch (error) {
-        console.log('ERROR in FETCH MOVIE DETAILS SAGA', error);
+        if(verbose)console.log('ERROR in FETCH MOVIE DETAILS SAGA', error);
     }
 } // END
 function* removeGenreFrom(action){
     try {
-        console.log("in delete saga", action.payload);
+        if(verbose)console.log("in delete saga", action.payload);
         
         yield axios.delete(`/genres/${action.payload.id}/${action.payload.genre}`);
         yield put({type: "FETCH_GENRES_OF", payload: action.payload.id})
     } catch (error) {
-        console.log('Error in removeGenreFrom Saga',error);
+        if(verbose)console.log('Error in removeGenreFrom Saga',error);
     }
 } // END
 function* updateMovieDetails(action) {
     try {
-        console.log('IN UPDATE MOVIE DETAILS SAGA');
+        if(verbose)console.log('IN UPDATE MOVIE DETAILS SAGA');
         yield axios.put(`/movies`, action.payload)
         yield put({ type: 'FETCH_MOVIE_DETAILS', payload: action.payload.id });
     } catch (error) {
-        console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);
+        if(verbose)console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);
     }
 } // END
 function* updateMovieRating(action) {
     try {
-        console.log('IN UPDATE MOVIE rating SAGA');
+        if(verbose)console.log('IN UPDATE MOVIE rating SAGA');
         yield axios.put(`/movies/${action.payload.id}/${action.payload.rating}`)
         yield put({ type: 'FETCH_MOVIE_DETAILS', payload: action.payload.id });
     } catch (error) {
-        console.log('Error IN UPDATE MOVIE RATINGS SAGA', error);
+        if(verbose)console.log('Error IN UPDATE MOVIE RATINGS SAGA', error);
     }
 } // END
 

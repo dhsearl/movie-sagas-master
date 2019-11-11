@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-// Alphabetical Reducers
+const verbose = false;
+
+// Alphabetical Reducer List
 
 // Flips view between Display and Edit on the details page
 const detailsDisplayReducer = (state = true, action) => {
@@ -16,7 +18,7 @@ const detailsDisplayReducer = (state = true, action) => {
 const detailsGenreReducer = (state={}, action) =>{
     switch (action.type) {
         case "SET_GENRES_DETAILS":
-            console.log(action.payload);
+            if(verbose)console.log(action.payload);
             return action.payload;
         default:
             return state;
@@ -53,7 +55,7 @@ const movies = (state = [], action) => {
 const movieDetails = (state = {}, action) => {
     switch (action.type) {
         case 'SET_MOVIE_DETAILS':
-            console.log('Setting movie details in reducer', action.payload);
+            if(verbose)console.log('Setting movie details in reducer', action.payload);
             return action.payload[0]
         default:
             return state;

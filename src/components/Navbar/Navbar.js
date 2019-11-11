@@ -22,7 +22,7 @@ class Navigation extends Component {
         this.props.dispatch({ type: 'FETCH_GENRES_PRESENT' })
     }
 
-
+    // First the filtering functions, then the main menu clicks
     filterByGenre = (genre) => {
         this.setState({
             selected: genre
@@ -30,7 +30,6 @@ class Navigation extends Component {
         this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: genre })
     }
     byRating = (selected) =>{
-        console.log(selected)
         this.props.dispatch({ type: "FETCH_MOVIES_BY_RATING", payload: selected })
     }
     allGenre = () => {
@@ -39,6 +38,7 @@ class Navigation extends Component {
         })
         this.props.dispatch({ type: "FETCH_MOVIES" })
     }
+
     menuClick = () => {
         this.allGenre();
         if (this.props.location.pathname !== "/") this.props.history.push('/');

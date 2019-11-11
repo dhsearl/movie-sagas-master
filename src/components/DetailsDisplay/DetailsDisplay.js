@@ -6,8 +6,8 @@ import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 
 class DetailsDisplay extends Component {
+
     handleRating = (click)=>{
-        console.log(click.rating);
         this.props.dispatch({type:"UPDATE_MOVIE_RATING", payload: { id: this.props.movie.id, rating: click.rating}})
     }
     handleEditClick = () => {
@@ -57,9 +57,6 @@ class DetailsDisplay extends Component {
                             <Heading subtitle size={3}>
                                 {movie.genre}
                             </Heading>
-                            {/* <p className="inputTextBox" style={{padding:'1rem'}}>
-                                {movie.description}
-                            </p> */}
                             <Box backgroundColor="dark" textColor="white">
                                 {movie.description}
                             </Box>

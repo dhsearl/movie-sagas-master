@@ -19,8 +19,9 @@ class DetailsEdit extends Component {
                 ...this.props.movie,
             })
     }
+    // click and event handlers
+    //
     handleRating = (click)=>{
-        console.log(click.rating);
         this.props.dispatch({type:"UPDATE_MOVIE_RATING", payload: { id: this.props.movie.id, rating: click.rating}})
     }
     handleInputs = (event, value) => {
