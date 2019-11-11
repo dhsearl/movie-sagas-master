@@ -22,7 +22,7 @@ class GalleryPosterCard extends Component {
 
                 <Card.Header>
                     <Card.Header.Title backgroundColor="link">
-                        {movie.name}
+                        
                     </Card.Header.Title>
                 </Card.Header>
 

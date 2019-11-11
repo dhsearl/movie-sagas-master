@@ -7,7 +7,7 @@ import { Container, Navbar, Button, Heading, Icon, Section, Tab } from 'react-bu
 
 // The sub nav is populated with genres that exist in the collection
 // I removed a dropdown in favor of a simpler method
-class Navigation extends Component {
+class SubNav extends Component {
 
     // Using state to track the default state of the ~dropdown~ sub-nav
     // Making a selection hits a different Saga/Reducer
@@ -42,23 +42,6 @@ class Navigation extends Component {
 
         return (
             <>
-                <Navbar
-                    color="success"
-                    fixed="top"
-                >
-                    <Container>
-                        <Navbar.Brand>
-                            <Navbar.Item
-                                onClick={this.menuClick}>
-                                <Icon size="large" color="dark">
-                                    <i className="fas fa-film fa-2x"></i>
-                                </Icon>
-                            </Navbar.Item>
-                           <Navbar.Item onClick={this.menuClick}> <Heading size={2}>Prime Movie Time</Heading></Navbar.Item>
-                        </Navbar.Brand>
-                    </Container>
-                </Navbar>
-
                 {this.props.location.pathname === "/" &&
                 <Section backgroundColor="warning">
                     <Container>
@@ -89,4 +72,4 @@ class Navigation extends Component {
 const mapReduxStateToProps = (reduxState) => {
     return reduxState
 }
-export default withRouter(connect(mapReduxStateToProps)(Navigation));
+export default withRouter(connect(mapReduxStateToProps)(SubNav));

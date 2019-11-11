@@ -1,64 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Columns,Button, Heading, Image, Icon, Container} from 'react-bulma-components'
+import { Box, Columns, Button, Heading, Image, Icon, Container } from 'react-bulma-components'
 
 class DetailsDisplay extends Component {
 
-    handleEditClick=()=>{
-        this.props.dispatch({type:"DISPLAY_MODE_FLIP"});
+    handleEditClick = () => {
+        this.props.dispatch({ type: "DISPLAY_MODE_FLIP" });
     }
-    
+
     render() {
         const movie = this.props.movie;
         return (
-            <>
             <Container className="detailsBox">
-            
-                {this.props.movieDetails.length > 0 && <div className="detailsPage">
-
+                {movie &&
                     <Columns>
-                    <Columns.Column
-                            mobile={{
-                                size: 6,
-                            }}
-                            tablet={{
-                                size: 3,
-                            }}>
+                        <Columns.Column
+                            mobile={{ size: 6, }}
+                            tablet={{ size: 3, }}
+                        >
                             <Box>
-
-                                <Image
-                                    src={movie.poster}
-                                    size='2by3'
-                                />
+                                <Image src={movie.poster} size='2by3' />
                             </Box>
                             <Box>
-                            <Button onClick={this.handleEditClick}>
-                            <Icon className="editIcon" >
-                            <i className="far fa-edit"></i>
-                            </Icon> <p>Edit</p>
-                            </Button>
+                                {movie.genres ?
+                                    <ul style={{ listStyle: 'none' }}>
+                                        {movie.genres.map((each, i) =>
+                                            <li key={i}> {each} </li>
+                                        )}</ul>
+                                    : <p>Uncategorized</p>
+                                }
+                            </Box>
+                            <Box>
+                                <Button onClick={this.handleEditClick}>
+                                    <Icon className="editIcon">
+                                        <i className="far fa-edit"></i>
+                                    </Icon>
+                                    <p>Edit</p>
+                                </Button>
                             </Box>
                         </Columns.Column>
-                        <Columns.Column>
 
+                        <Columns.Column>
                             <Heading size={1}>
                                 {movie.title}
                             </Heading>
                             <Heading subtitle size={3}>
                                 {movie.genre}
                             </Heading>
-                            <Box
-                            backgroundColor="dark"
-                            textColor="white"
-                            >{movie.description}
-                            
+                            {/* <p className="inputTextBox" style={{padding:'1rem'}}>
+                                {movie.description}
+                            </p> */}
+                            <Box backgroundColor="dark" textColor="white">
+                                {movie.description}
                             </Box>
                         </Columns.Column>
                     </Columns>
-
-                </div>}</Container>
-            </>
+                }
+            </Container>
         )
     }
 }

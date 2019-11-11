@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
-// import './DetailsEdit.css'
 
 class DetailsEdit extends Component {
     state = {
@@ -10,13 +9,13 @@ class DetailsEdit extends Component {
         title: '',
         poster: '',
         description: '',
-        genre: '',
+
     }
 
     componentDidMount() {
         this.setState(
             {
-                ...this.props.movieDetails[0],
+                ...this.props.movie,
             })
     }
 
@@ -26,8 +25,18 @@ class DetailsEdit extends Component {
             [value]: event.target.value,
         })
     }
-    handleGenreDropdown = (selected) => {
-        this.setState({ genre: selected })
+    handleGenreDropdown = (event, selected) => {
+        if ((this.state.genres == null || !this.state.genres.includes(event.target.value)) && event.target.value !== 'default') {
+            const newGenrePayload = { id: this.state.id, newGenre: event.target.value }
+            this.props.dispatch({ type: "ADD_GENRE", payload: newGenrePayload })
+        }
+    }
+    handleGenreDelete = (genre) => {
+        const deletePayload = { id: this.state.id, genre: genre }
+        this.props.dispatch({
+            type: "REMOVE_GENRE_FROM",
+            payload: deletePayload
+        });
     }
 
 
@@ -41,66 +50,69 @@ class DetailsEdit extends Component {
 
     render() {
         const movie = this.props.movie;
-        const numRows = Math.round(this.props.movie.description.length / 60) + 5;
+        const numRows = Math.round(movie.description.length / 60) + 5;
         return (
-            <>
-                <Container className="detailsBox">
-                    {this.props.movieDetails.length > 0 && <div className="detailsPage">
 
+                <Container className="detailsBox">
+                    {movie &&
                         <Columns>
                             <Columns.Column
-                                mobile={{
-                                    size: 6,
-                                }}
-                                tablet={{
-                                    size: 3,
-                                }}>
+                                mobile={{ size: 6, }}
+                                tablet={{ size: 4, }}>
                                 <Box>
-                                    <Image
-                                        src={movie.poster}
-                                        size='2by3'
-                                    />
+                                    <Image src={movie.poster} size='2by3' />
+                                </Box>
+                                <Box>
+                                    {movie.genres ?
+                                        movie.genres.map((each, i) =>
+                                            <Level key={each + i}>
+                                                <p>{each}</p>
+                                                <Button onClick={() => { this.handleGenreDelete(each) }}>
+                                                    <Icon color="danger">
+                                                        <i className="far fa-window-close"></i>
+                                                    </Icon>
+                                                </Button>
+                                            </Level>
+                                        ) : <p>Uncategorized</p>
+                                    }
                                 </Box>
                                 <Box>
                                     <Level>
                                         <Button onClick={this.handleSaveClick}>
                                             <Icon color="success">
                                                 <i className="far fa-save"></i>
-                                            </Icon > <p>Save</p>
+                                            </Icon >
+                                            <p>Save</p>
                                         </Button>
                                         <Button onClick={this.handleCancelClick}>
                                             <Icon color="danger">
                                                 <i className="far fa-window-close"></i>
-                                            </Icon><p>Cancel</p>
+                                            </Icon>
+                                            <p>Cancel</p>
                                         </Button>
                                     </Level>
                                 </Box>
                             </Columns.Column>
                             <Columns.Column>
                                 <input className="inputTitle" value={this.state.title} onChange={(event) => this.handleInputs(event, 'title')} />
-                                <select
+                                <select multiple={false}
                                     className="inputGenre"
-                                    onChange={(event) => this.handleInputs(event, 'genre')}
-                                    value={this.state.genre}
+                                    onChange={(event) => this.handleGenreDropdown(event, 'genre')}
                                 >
+                                    <option value="default" defaultValue>Add Genre</option>
                                     {this.props.genres.map(each =>
                                         <option value={each.name} key={each.id}>
                                             {each.name}
                                         </option>
                                     )}
                                 </select>
-                                <Box
-                                    backgroundColor="dark"
-                                    textColor="white"
-                                >
+                                <Box backgroundColor="dark" textColor="white">
                                     <textarea rows={numRows} className="inputTextBox" value={this.state.description} onChange={(event) => this.handleInputs(event, 'description')} />
                                 </Box>
                             </Columns.Column>
                         </Columns>
-
-                    </div>}
+                    }
                 </Container>
-            </>
         )
     }
 }
