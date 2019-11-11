@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
 // CSS
-import './index.css'
+import './index.scss'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 // Reducers and Sagas moved out to redux folder
 import rootReducer from './redux/root.reducer'

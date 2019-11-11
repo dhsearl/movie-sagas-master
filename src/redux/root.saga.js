@@ -102,6 +102,15 @@ function* updateMovieDetails(action) {
         console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);
     }
 } // END
+function* updateMovieRating(action) {
+    try {
+        console.log('IN UPDATE MOVIE rating SAGA');
+        yield axios.put(`/movies/${action.payload.id}/${action.payload.rating}`)
+        yield put({ type: 'FETCH_MOVIE_DETAILS', payload: action.payload.id });
+    } catch (error) {
+        console.log('Error IN UPDATE MOVIE RATINGS SAGA', error);
+    }
+} // END
 
 function* rootSaga() {
     yield takeEvery("ADD_GENRE", addGenreSaga);
@@ -113,6 +122,7 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
     yield takeEvery('REMOVE_GENRE_FROM', removeGenreFrom);
     yield takeEvery('UPDATE_MOVIE_DETAILS', updateMovieDetails);
+    yield takeEvery('UPDATE_MOVIE_RATING', updateMovieRating);
 }  // END
 
 export default rootSaga;

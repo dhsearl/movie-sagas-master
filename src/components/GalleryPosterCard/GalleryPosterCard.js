@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Card, Content, Heading } from 'react-bulma-components'
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
 class GalleryPosterCard extends Component {
 
     routeToMovieDetails = (id) => {
@@ -18,14 +20,14 @@ class GalleryPosterCard extends Component {
         const movieDescriptionShort = this.makeShorter(movie.description);
         return (
       
-            <Card style={{ width: "185px", margin: '1rem'  }} onClick={() => this.routeToMovieDetails(movie.id)}>
+            <Card style={{ width: "185px", margin: '1rem'  }}>
 
                 <Card.Header>
                     <Card.Header.Title backgroundColor="link">
-                        
+                    <Rater color="#FEd847" total={5} rating={movie.rating} interactive={false} onRate={(click)=>this.handleRating(click)}/>
                     </Card.Header.Title>
                 </Card.Header>
-
+                <span onClick={() => this.routeToMovieDetails(movie.id)}>
                 <Card.Image style={{ width: "185px", height: 'auto' }} src={movie.poster} />
 
                 <Card.Content>
@@ -33,7 +35,7 @@ class GalleryPosterCard extends Component {
                     <Content>
                         {movieDescriptionShort} <Content style={{ display: "inline" }} textColor="link">more.</Content>
                     </Content>
-                </Card.Content>
+                </Card.Content></span>
             </Card>
         )
     }

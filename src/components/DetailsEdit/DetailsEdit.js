@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
-
+import Rater from 'react-rater'
+import 'react-rater/lib/react-rater.css'
 class DetailsEdit extends Component {
     state = {
         id: '',
         title: '',
         poster: '',
         description: '',
-
+        rating: 3,
     }
 
     componentDidMount() {
@@ -18,7 +19,10 @@ class DetailsEdit extends Component {
                 ...this.props.movie,
             })
     }
-
+    handleRating = (click)=>{
+        console.log(click.rating);
+        this.props.dispatch({type:"UPDATE_MOVIE_RATING", payload: { id: this.props.movie.id, rating: click.rating}})
+    }
     handleInputs = (event, value) => {
         this.setState({
             ...this.state,
@@ -61,6 +65,9 @@ class DetailsEdit extends Component {
                                 tablet={{ size: 4, }}>
                                 <Box>
                                     <Image src={movie.poster} size='2by3' />
+                                </Box>
+                                <Box>
+                                    <Rater color="#FEd847" total={5} rating={movie.rating} interactive={true} onRate={(click)=>this.handleRating(click)}/>
                                 </Box>
                                 <Box>
                                     {movie.genres ?

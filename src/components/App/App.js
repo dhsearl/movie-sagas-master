@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css'
+import './App.scss'
 import Navbar from '../Navbar/Navbar'
 import RouteContainer from '../RouteContainer/RouteContainer'
 import { HashRouter as Router} from 'react-router-dom'
