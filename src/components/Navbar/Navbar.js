@@ -56,7 +56,7 @@ class Navigation extends Component {
                     fixed="top"
                 >
                     <Container>
-                        <Level>
+                        {/* <Level> */}
                         <Navbar.Brand>
                             <Navbar.Item
                                 onClick={this.menuClick}>
@@ -65,7 +65,7 @@ class Navigation extends Component {
                                 </Icon>
                             </Navbar.Item>
                             <Navbar.Item onClick={this.menuClick}> <Heading size={2}>Prime Movie Time</Heading></Navbar.Item>
-                        </Navbar.Brand>
+                       
                         
                             <Navbar.Item >
                                 <Dropdown
@@ -86,7 +86,8 @@ class Navigation extends Component {
                                     )}
                                 </Dropdown>
                             </Navbar.Item>
-                            </Level>
+                            {/* </Level> */} 
+                            </Navbar.Brand>
                     </Container>
                 </Navbar>
 
