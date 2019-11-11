@@ -7,6 +7,16 @@ import axios from "axios";
 // This will set GENRES to ALL possible genres 
 //  This is used in the Navbar dropdown
 //  Found in the table genres
+function* addGenreSaga(action) {
+    try {
+        
+        yield axios.put('/genres/add', action.payload)
+        yield put({type: "FETCH_GENRES_OF", payload: action.payload.id})
+    } catch(error) {
+        console.log('Add Genre Saga Error', error);
+    }
+} // END
+
 function* fetchGenresSaga() {
     try {
         const genres = yield axios.get('/genres');
@@ -73,7 +83,16 @@ function* fetchMovieDetails(action) {
         console.log('ERROR in FETCH MOVIE DETAILS SAGA', error);
     }
 } // END
-
+function* removeGenreFrom(action){
+    try {
+        console.log("in delete saga", action.payload);
+        
+        yield axios.delete(`/genres/${action.payload.id}/${action.payload.genre}`);
+        yield put({type: "FETCH_GENRES_OF", payload: action.payload.id})
+    } catch (error) {
+        console.log('Error in removeGenreFrom Saga',error);
+    }
+} // END
 function* updateMovieDetails(action) {
     try {
         console.log('IN UPDATE MOVIE DETAILS SAGA');
@@ -83,13 +102,17 @@ function* updateMovieDetails(action) {
         console.log('Error IN UPDATE MOVIE DETAILS SAGA', error);
     }
 } // END
+
 function* rootSaga() {
+    yield takeEvery("ADD_GENRE", addGenreSaga);
     yield takeEvery("FETCH_GENRES", fetchGenresSaga);
     yield takeEvery("FETCH_GENRES_PRESENT", fetchGenresPresent);
     yield takeEvery("FETCH_GENRES_OF", fetchGenresOf);
     yield takeEvery("FETCH_MOVIES", fetchMovieSaga);
     yield takeEvery("FETCH_MOVIES_BY_GENRE", fetchMovieByGenreSaga);
     yield takeEvery('FETCH_MOVIE_DETAILS', fetchMovieDetails);
+    yield takeEvery('REMOVE_GENRE_FROM', removeGenreFrom);
     yield takeEvery('UPDATE_MOVIE_DETAILS', updateMovieDetails);
 }  // END
+
 export default rootSaga;

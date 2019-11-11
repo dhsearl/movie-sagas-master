@@ -75,7 +75,7 @@ class Navigation extends Component {
                                 this.props.genresPresent &&
                                 (
                                     <Navbar.Item >
-                                        <Dropdown
+                                        {/* <Dropdown
                                             color="info"
                                             onChange={this.onChange}
                                             value={this.state.selected}
@@ -85,13 +85,13 @@ class Navigation extends Component {
                                                 defaultValue>
                                                 All genres
                                     </Dropdown.Item>
-                                            {/* Changed this line for the genre by genre name route test */}
+                                            Changed this line for the genre by genre name route test 
                                             {this.props.genresPresent.map(each =>
                                                 <Dropdown.Item value={each} key={each}>
                                                     {each}
                                                 </Dropdown.Item>
                                             )}
-                                        </Dropdown>
+                                        </Dropdown> */}
                                     </Navbar.Item>
                                 )}
                         </Navbar.Brand>

@@ -34,11 +34,12 @@ class DetailsDisplay extends Component {
                                 </Box>
                                 <Box>
                                     {movie.genres ?
+
                                         <ul style={{ listStyle: 'none' }}>
-                                            {movie.genres.map(each =>
-                                                <li>{each}</li>
-                                            )}
-                                        </ul> : <p>Uncategorized</p>
+                                            {movie.genres.map( (each, i) =>
+                                                <li key={i}> {each} </li>
+                                            )}</ul>
+                                        : <p>Uncategorized</p>
                                     }
                                 </Box>
                                 <Box>

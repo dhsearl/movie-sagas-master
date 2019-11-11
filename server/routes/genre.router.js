@@ -7,6 +7,27 @@ const pool = require('../modules/pool');
 //      This is used by the Fetch Genres Saga
 //      This is connected to the Set Genres Reducer
 
+router.delete('/:id/:genre', (req,res)=>{
+    console.log("in delete", req.params.id, req.params.genre);
+    
+    const queryText = `
+    DELETE FROM movies_genres 
+    WHERE movie_id = $1 
+    AND genre_id = 
+        (SELECT genres.id 
+        FROM genres WHERE genres.name = $2);`;
+    const queryArguments = [req.params.id, req.params.genre];
+    console.log("query args are", queryArguments)
+    pool.query(queryText, queryArguments)
+    .then(()=>{
+        console.log('DELETE Success');
+        res.sendStatus(200);
+    })
+    .catch((error)=>{
+        console.log('Error in Delete Query', error);
+        res.sendStatus(500);
+    })
+})
 router.get('/', (req, res) => {
     console.log('movie.router GET hit');
     const queryText = 
@@ -22,6 +43,28 @@ router.get('/', (req, res) => {
             console.log('Error in movie.router genre GET', error);
             res.sendStatus(500);
         })
+})
+router.put('/add', (req,res)=>{
+    console.log('IN GENRE/ADD route');
+    const movieId = req.body.id; // $1
+    const genreString = req.body.newGenre; // $2
+    const queryArguments =[movieId,genreString]
+    const queryText = `
+    INSERT INTO movies_genres ("movie_id","genre_id")
+    VALUES($1, 
+        (SELECT genres.id 
+        FROM genres 
+        WHERE genres.name = $2));
+    `
+    pool.query(queryText, queryArguments)
+    .then(()=>{
+        console.log('Genre inserted');
+        res.sendStatus(200);        
+    })
+    .catch((error)=>{
+        console.log('Error inserting genre', error);
+        res.sendStatus(500);
+    })
 })
 router.get('/of/:title', (req, res) => {
     console.log('GET GENRES OF MOVIE hit', req.params.title);

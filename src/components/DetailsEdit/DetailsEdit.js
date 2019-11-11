@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
+import { Box, Button, Columns, Container, Image, Icon, Level, Dropdown } from 'react-bulma-components'
 
 class DetailsEdit extends Component {
     state = {
@@ -25,8 +25,18 @@ class DetailsEdit extends Component {
             [value]: event.target.value,
         })
     }
-    handleGenreDropdown = (selected) => {
-        this.setState({ genre: selected })
+    handleGenreDropdown = (event , selected) => {
+        // console.log(event.target.value);
+        // console.log("selected is",selected)
+        if (!this.state.genres.includes(event.target.value) && event.target.value !== 'default') {
+            const newGenrePayload = { id: this.state.id, newGenre: event.target.value }
+            this.props.dispatch({ type: "ADD_GENRE", payload: newGenrePayload })
+        }
+    }
+    handleGenreDelete = (genre) =>{
+        const deletePayload = { id: this.state.id, genre: genre }
+        this.props.dispatch({ type:"REMOVE_GENRE_FROM", 
+        payload: deletePayload });
     }
 
 
@@ -63,14 +73,14 @@ class DetailsEdit extends Component {
                                 </Box>
                                 <Box>
                                     {movie.genres ?
-                                        movie.genres.map(each => 
-                                            <Level>
-                                            <p>{each}</p>
-                                            <Button>
-                                                <Icon color="danger">
-                                                    <i className="far fa-window-close"></i>
-                                                </Icon>
-                                            </Button>
+                                        movie.genres.map((each, i) =>
+                                            <Level key={each + i}>
+                                                <p>{each}</p>
+                                                <Button onClick={()=>{this.handleGenreDelete(each)}}>
+                                                    <Icon color="danger">
+                                                        <i className="far fa-window-close"></i>
+                                                    </Icon>
+                                                </Button>
                                             </Level>
                                         ) : <p>Uncategorized</p>
                                     }
@@ -92,11 +102,16 @@ class DetailsEdit extends Component {
                             </Columns.Column>
                             <Columns.Column>
                                 <input className="inputTitle" value={this.state.title} onChange={(event) => this.handleInputs(event, 'title')} />
-                                <select
+
+
+                                <pre>{JSON.stringify(this.props.genres,null,2)}</pre>
+                                
+                                <select multiple={false}
+                                    
                                     className="inputGenre"
-                                    onChange={(event) => this.handleInputs(event, 'genre')}
-                                    value={this.state.genre}
+                                    onChange={(event) => this.handleGenreDropdown(event, 'genre')}
                                 >
+                                    <option value="default" defaultValue>Add Genre</option>
                                     {this.props.genres.map(each =>
                                         <option value={each.name} key={each.id}>
                                             {each.name}
