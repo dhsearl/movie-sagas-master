@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Container, Navbar, Button, Dropdown, Icon, Section, Tab } from 'react-bulma-components'
+import { Container, Navbar, Button, Heading, Icon, Section, Tab } from 'react-bulma-components'
 
 
+
+// The sub nav is populated with genres that exist in the collection
+// I removed a dropdown in favor of a simpler method
 class Navigation extends Component {
+
     // Using state to track the default state of the ~dropdown~ sub-nav
     // Making a selection hits a different Saga/Reducer
     state = {
         selected: 'default'
     }
 
-    // Refreshing Genres_Present
+    // Refreshing Genres for SubNav
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_GENRES_PRESENT' })
     }
-    // Handle Change of Genre Dropdown
-    // Only shows movies of that genre
-    // Only shows genres we have in the movies
-    // onChange = (selected) => {
-    //     this.setState({ selected }, () => {
-    //         if (selected !== 'default') {
-    //             this.props.dispatch({ type: "FETCH_MOVIES_BY_GENRE", payload: selected })
-    //         } else {
-    //             this.props.dispatch({ type: "FETCH_MOVIES" })
-    //         }
-    //     });
-    // }
+
 
     filterByGenre = (genre) => {
         this.setState({
@@ -49,7 +42,6 @@ class Navigation extends Component {
 
         return (
             <>
-                {/* Both the Film icon and the Home buttons only work on paths other than "/" */}
                 <Navbar
                     color="success"
                     fixed="top"
@@ -58,69 +50,37 @@ class Navigation extends Component {
                         <Navbar.Brand>
                             <Navbar.Item
                                 onClick={this.menuClick}>
-                                <Icon size="large">
+                                <Icon size="large" color="dark">
                                     <i className="fas fa-film fa-2x"></i>
                                 </Icon>
                             </Navbar.Item>
-                            <Navbar.Item>
-                                <Button
-                                    color="info"
-                                    onClick={this.menuClick}>
-                                    Home
-                            </Button>
-                            </Navbar.Item>
-
-                            {/* If on the main path, show the dropdown to select Genres */}
-                            {this.props.location.pathname === "/" &&
-                                this.props.genresPresent &&
-                                (
-                                    <Navbar.Item >
-                                        {/* <Dropdown
-                                            color="info"
-                                            onChange={this.onChange}
-                                            value={this.state.selected}
-                                        >
-                                            <Dropdown.Item
-                                                value="default"
-                                                defaultValue>
-                                                All genres
-                                    </Dropdown.Item>
-                                            Changed this line for the genre by genre name route test 
-                                            {this.props.genresPresent.map(each =>
-                                                <Dropdown.Item value={each} key={each}>
-                                                    {each}
-                                                </Dropdown.Item>
-                                            )}
-                                        </Dropdown> */}
-                                    </Navbar.Item>
-                                )}
+                           <Navbar.Item onClick={this.menuClick}> <Heading size={2}>Prime Movie Time</Heading></Navbar.Item>
                         </Navbar.Brand>
                     </Container>
                 </Navbar>
 
+                {this.props.location.pathname === "/" &&
                 <Section backgroundColor="warning">
                     <Container>
-                        <span
+                        <div
                             className="navGenre"
-                            style={{color: 'default'===this.state.selected && '#5ccd50'}}
+                            style={{color: 'default'===this.state.selected && '#f96167'}}
                             onClick={this.allGenre}
-                        >All</span>
+                        >All</div>
                         {this.props.genresPresent.length > 0 &&
                             this.props.genresPresent.map(
                                 eachGenre =>
-                                    <span
+                                    <div
                                         className="navGenre"
                                         style={{
-                                            color: eachGenre===this.state.selected && '#5ccd50'
+                                            color: eachGenre===this.state.selected && '#f96167'
                                           }}
                                         key={eachGenre}
                                         onClick={() => this.filterByGenre(eachGenre)}
-                                    >{eachGenre}</span>)}
+                                    >{eachGenre}</div>)}
 
                     </Container>
-                    {/* <pre>{JSON.stringify(this.props.genresPresent[0].array_agg,null,2)}</pre> */}
-
-                </Section>
+                </Section>}
             </>
         )
     }

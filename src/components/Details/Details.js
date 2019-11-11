@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Columns, Heading, Image, Icon } from 'react-bulma-components'
 import DetailsEdit from '../DetailsEdit/DetailsEdit';
 import DetailsDisplay from '../DetailsDisplay/DetailsDisplay'
-
+import { Container, Section } from 'react-bulma-components'
 class Details extends Component {
     state={
         displayMode:false,
@@ -24,9 +23,7 @@ class Details extends Component {
         return (
             <>
             <div className="page">
-                <pre>movieDetails:{JSON.stringify(this.props.movieDetails,null,2)}</pre>
-                
-            {/* {movie && (movie.id ===Number(this.props.location.pathname.slice(1,)) && (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>))} */}
+
             {this.state.displayMode && 
             movie.id===Number(this.props.location.pathname.slice(1,)) && 
             (this.props.detailsDisplayReducer ? <DetailsDisplay movie={movie} /> : <DetailsEdit movie={movie}/>)}

@@ -2,14 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
-
-// This responds with the full list of available genres for the dropdown
-//      This is used by the Fetch Genres Saga
-//      This is connected to the Set Genres Reducer
-
 router.delete('/:id/:genre', (req,res)=>{
     console.log("in delete", req.params.id, req.params.genre);
-    
     const queryText = `
     DELETE FROM movies_genres 
     WHERE movie_id = $1 
@@ -28,7 +22,11 @@ router.delete('/:id/:genre', (req,res)=>{
         res.sendStatus(500);
     })
 })
+
 router.get('/', (req, res) => {
+    // This responds with the full list of available genres for the dropdown
+    //      This is used by the Fetch Genres Saga
+    //      This is connected to the Set Genres Reducer
     console.log('movie.router GET hit');
     const queryText = 
     `SELECT *
@@ -44,28 +42,27 @@ router.get('/', (req, res) => {
             res.sendStatus(500);
         })
 })
-router.put('/add', (req,res)=>{
-    console.log('IN GENRE/ADD route');
-    const movieId = req.body.id; // $1
-    const genreString = req.body.newGenre; // $2
-    const queryArguments =[movieId,genreString]
-    const queryText = `
-    INSERT INTO movies_genres ("movie_id","genre_id")
-    VALUES($1, 
-        (SELECT genres.id 
-        FROM genres 
-        WHERE genres.name = $2));
-    `
+
+router.get('/by/:genre', (req, res) => {
+    console.log('movie.router by Genre Name GET hit', req.params.genre);
+    const queryText = 
+    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
+    FROM movies
+    JOIN movies_genres ON movies.id = movies_genres.movie_id
+    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
+    WHERE genres.name = $1
+    ORDER BY movies.title;`
+    const queryArguments = [req.params.genre]
     pool.query(queryText, queryArguments)
-    .then(()=>{
-        console.log('Genre inserted');
-        res.sendStatus(200);        
-    })
-    .catch((error)=>{
-        console.log('Error inserting genre', error);
-        res.sendStatus(500);
-    })
-})
+        .then((result) => {
+            console.log('/movies/id GET success', result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in movie.router GET', error);
+            res.sendStatus(500);
+        })
+}) // END
 router.get('/of/:title', (req, res) => {
     console.log('GET GENRES OF MOVIE hit', req.params.title);
     const queryText = 
@@ -84,35 +81,11 @@ router.get('/of/:title', (req, res) => {
             console.log('Error in movie.router GET', error);
             res.sendStatus(500);
         })
-})
-router.get('/by/:genre', (req, res) => {
-    console.log('movie.router by Genre Name GET hit', req.params.genre);
-    
-    const queryText = 
-    `SELECT movies.id, movies.title, genres.name, movies.poster, movies.description 
-    FROM movies
-    JOIN movies_genres ON movies.id = movies_genres.movie_id
-    LEFT OUTER JOIN genres ON movies_genres.genre_id = genres.id
-    WHERE genres.name = $1
-    ORDER BY movies.title;`
-    const queryArguments = [req.params.genre]
-    pool.query(queryText, queryArguments)
-        .then((result) => {
-            console.log('/movies/id GET success', result.rows);
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log('Error in movie.router GET', error);
-            res.sendStatus(500);
-        })
-})
-
-// This responds with the list of genres currently in the collection
+}) // END
+router.get('/present', (req, res) => {
+    // This responds with the list of genres currently in the collection
 //      This is used by the Fetch Genres Present Saga
 //      This is connected to the Set Genres Present Reducer
-
-
-router.get('/present', (req, res) => {
     console.log('movie.router genres present GET hit');
     const queryText = 
     `SELECT ARRAY_AGG(DISTINCT genres.name) as genres
@@ -128,6 +101,32 @@ router.get('/present', (req, res) => {
             console.log('Error in movie.router genre GET', error);
             res.sendStatus(500);
         })
-})
+}) // END
+router.put('/add', (req,res)=>{
+    // This adds a movie and genre pair to the junction table
+    //   
+    console.log('IN GENRE/ADD route');
+    const queryText = `
+    INSERT INTO movies_genres ("movie_id","genre_id")
+    VALUES($1, 
+        (SELECT genres.id 
+        FROM genres 
+        WHERE genres.name = $2));
+    `
+    const movieId = req.body.id; // $1
+    const genreString = req.body.newGenre; // $2
+    const queryArguments =[movieId,genreString]
+    pool.query(queryText, queryArguments)
+    .then(()=>{
+        console.log('Genre inserted');
+        res.sendStatus(200);        
+    })
+    .catch((error)=>{
+        console.log('Error inserting genre', error);
+        res.sendStatus(500);
+    })
+})// END
+
+
 
 module.exports = router;

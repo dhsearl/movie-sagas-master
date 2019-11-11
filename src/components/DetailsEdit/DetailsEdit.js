@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Box, Button, Columns, Container, Image, Icon, Level, Dropdown } from 'react-bulma-components'
+import { Box, Button, Columns, Container, Image, Icon, Level } from 'react-bulma-components'
 
 class DetailsEdit extends Component {
     state = {
@@ -9,7 +9,7 @@ class DetailsEdit extends Component {
         title: '',
         poster: '',
         description: '',
-        genre: [],
+
     }
 
     componentDidMount() {
@@ -25,18 +25,18 @@ class DetailsEdit extends Component {
             [value]: event.target.value,
         })
     }
-    handleGenreDropdown = (event , selected) => {
-        // console.log(event.target.value);
-        // console.log("selected is",selected)
-        if (!this.state.genres.includes(event.target.value) && event.target.value !== 'default') {
+    handleGenreDropdown = (event, selected) => {
+        if ((this.state.genres == null || !this.state.genres.includes(event.target.value)) && event.target.value !== 'default') {
             const newGenrePayload = { id: this.state.id, newGenre: event.target.value }
             this.props.dispatch({ type: "ADD_GENRE", payload: newGenrePayload })
         }
     }
-    handleGenreDelete = (genre) =>{
+    handleGenreDelete = (genre) => {
         const deletePayload = { id: this.state.id, genre: genre }
-        this.props.dispatch({ type:"REMOVE_GENRE_FROM", 
-        payload: deletePayload });
+        this.props.dispatch({
+            type: "REMOVE_GENRE_FROM",
+            payload: deletePayload
+        });
     }
 
 
@@ -52,31 +52,22 @@ class DetailsEdit extends Component {
         const movie = this.props.movie;
         const numRows = Math.round(movie.description.length / 60) + 5;
         return (
-            <>
-                <pre>movie props as they come to details{JSON.stringify(this.props.movie, null, 2)}</pre>
+
                 <Container className="detailsBox">
                     {movie &&
-
                         <Columns>
                             <Columns.Column
-                                mobile={{
-                                    size: 6,
-                                }}
-                                tablet={{
-                                    size: 3,
-                                }}>
+                                mobile={{ size: 6, }}
+                                tablet={{ size: 4, }}>
                                 <Box>
-                                    <Image
-                                        src={movie.poster}
-                                        size='2by3'
-                                    />
+                                    <Image src={movie.poster} size='2by3' />
                                 </Box>
                                 <Box>
                                     {movie.genres ?
                                         movie.genres.map((each, i) =>
                                             <Level key={each + i}>
                                                 <p>{each}</p>
-                                                <Button onClick={()=>{this.handleGenreDelete(each)}}>
+                                                <Button onClick={() => { this.handleGenreDelete(each) }}>
                                                     <Icon color="danger">
                                                         <i className="far fa-window-close"></i>
                                                     </Icon>
@@ -90,24 +81,21 @@ class DetailsEdit extends Component {
                                         <Button onClick={this.handleSaveClick}>
                                             <Icon color="success">
                                                 <i className="far fa-save"></i>
-                                            </Icon > <p>Save</p>
+                                            </Icon >
+                                            <p>Save</p>
                                         </Button>
                                         <Button onClick={this.handleCancelClick}>
                                             <Icon color="danger">
                                                 <i className="far fa-window-close"></i>
-                                            </Icon><p>Cancel</p>
+                                            </Icon>
+                                            <p>Cancel</p>
                                         </Button>
                                     </Level>
                                 </Box>
                             </Columns.Column>
                             <Columns.Column>
                                 <input className="inputTitle" value={this.state.title} onChange={(event) => this.handleInputs(event, 'title')} />
-
-
-                                <pre>{JSON.stringify(this.props.genres,null,2)}</pre>
-                                
                                 <select multiple={false}
-                                    
                                     className="inputGenre"
                                     onChange={(event) => this.handleGenreDropdown(event, 'genre')}
                                 >
@@ -118,17 +106,13 @@ class DetailsEdit extends Component {
                                         </option>
                                     )}
                                 </select>
-                                <Box
-                                    backgroundColor="dark"
-                                    textColor="white"
-                                >
+                                <Box backgroundColor="dark" textColor="white">
                                     <textarea rows={numRows} className="inputTextBox" value={this.state.description} onChange={(event) => this.handleInputs(event, 'description')} />
                                 </Box>
                             </Columns.Column>
                         </Columns>
                     }
                 </Container>
-            </>
         )
     }
 }

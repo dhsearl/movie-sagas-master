@@ -12,63 +12,52 @@ class DetailsDisplay extends Component {
     render() {
         const movie = this.props.movie;
         return (
-            <>
-                <pre>movie props as they come to details{JSON.stringify(this.props.movie, null, 2)}</pre>
+            <Container className="detailsBox">
+                {movie &&
+                    <Columns>
+                        <Columns.Column
+                            mobile={{ size: 6, }}
+                            tablet={{ size: 3, }}
+                        >
+                            <Box>
+                                <Image src={movie.poster} size='2by3' />
+                            </Box>
+                            <Box>
+                                {movie.genres ?
+                                    <ul style={{ listStyle: 'none' }}>
+                                        {movie.genres.map((each, i) =>
+                                            <li key={i}> {each} </li>
+                                        )}</ul>
+                                    : <p>Uncategorized</p>
+                                }
+                            </Box>
+                            <Box>
+                                <Button onClick={this.handleEditClick}>
+                                    <Icon className="editIcon">
+                                        <i className="far fa-edit"></i>
+                                    </Icon>
+                                    <p>Edit</p>
+                                </Button>
+                            </Box>
+                        </Columns.Column>
 
-                <Container className="detailsBox">
-
-                    {movie &&
-                        <Columns>
-                            <Columns.Column
-                                mobile={{
-                                    size: 6,
-                                }}
-                                tablet={{
-                                    size: 3,
-                                }}>
-                                <Box>
-                                    <Image
-                                        src={movie.poster}
-                                        size='2by3'
-                                    />
-                                </Box>
-                                <Box>
-                                    {movie.genres ?
-
-                                        <ul style={{ listStyle: 'none' }}>
-                                            {movie.genres.map( (each, i) =>
-                                                <li key={i}> {each} </li>
-                                            )}</ul>
-                                        : <p>Uncategorized</p>
-                                    }
-                                </Box>
-                                <Box>
-                                    <Button onClick={this.handleEditClick}>
-                                        <Icon className="editIcon" >
-                                            <i className="far fa-edit"></i>
-                                        </Icon> <p>Edit</p>
-                                    </Button>
-                                </Box>
-                            </Columns.Column>
-                            <Columns.Column>
-
-                                <Heading size={1}>
-                                    {movie.title}
-                                </Heading>
-                                <Heading subtitle size={3}>
-                                    {movie.genre}
-                                </Heading>
-                                <Box
-                                    backgroundColor="dark"
-                                    textColor="white"
-                                >{movie.description}
-
-                                </Box>
-                            </Columns.Column>
-                        </Columns>
-                    }
-                </Container>
-            </>
+                        <Columns.Column>
+                            <Heading size={1}>
+                                {movie.title}
+                            </Heading>
+                            <Heading subtitle size={3}>
+                                {movie.genre}
+                            </Heading>
+                            {/* <p className="inputTextBox" style={{padding:'1rem'}}>
+                                {movie.description}
+                            </p> */}
+                            <Box backgroundColor="dark" textColor="white">
+                                {movie.description}
+                            </Box>
+                        </Columns.Column>
+                    </Columns>
+                }
+            </Container>
         )
     }
 }
