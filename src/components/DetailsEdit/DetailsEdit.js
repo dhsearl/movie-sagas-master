@@ -67,19 +67,21 @@ class DetailsEdit extends Component {
                                 <Box>
                                     <Image src={movie.poster} size='2by3' />
                                 </Box>
-                                <Box>
+                                {/* <Box>
                                     <Rater color="#FEd847" total={5} rating={movie.rating} interactive={true} onRate={(click)=>this.handleRating(click)}/>
-                                </Box>
+                                </Box> */}
                                 <Box>
                                     {movie.genres ?
                                         movie.genres.map((each, i) =>
                                             <Level key={each + i}>
+                                                    
                                                 <p>{each}</p>
                                                 <Button onClick={() => { this.handleGenreDelete(each) }}>
                                                     <Icon color="danger">
                                                         <i className="far fa-window-close"></i>
                                                     </Icon>
                                                 </Button>
+                                               
                                             </Level>
                                         ) : <p>Uncategorized</p>
                                     }
@@ -102,7 +104,12 @@ class DetailsEdit extends Component {
                                 </Box>
                             </Columns.Column>
                             <Columns.Column>
+                        
+                            <Rater color="#FEd847" total={5} rating={movie.rating} interactive={true} onRate={(click)=>this.handleRating(click)}/>
+                                  
                                 <input className="inputTitle" value={this.state.title} onChange={(event) => this.handleInputs(event, 'title')} />
+                            
+
                                 <select multiple={false}
                                     className="inputGenre"
                                     onChange={(event) => this.handleGenreDropdown(event, 'genre')}

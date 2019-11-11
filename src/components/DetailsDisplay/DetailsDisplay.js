@@ -19,18 +19,17 @@ class DetailsDisplay extends Component {
         return (
             <Container className="detailsBox">
 
-                {movie && <div className="detailsBoxSpace">
+                {movie && 
+                // <div className="detailsBoxSpace">
                     <Columns>
                         <Columns.Column
                             mobile={{ size: 6, }}
-                            tablet={{ size: 3, }}
+                            tablet={{ size: 4, }}
                         >
                             <Box>
                                 <Image src={movie.poster} size='2by3' />
                             </Box>
-                            <Box>
-                                <Rater color="#FEd847" total={5} rating={movie.rating} interactive={true} onRate={(click)=>this.handleRating(click)}/>
-                            </Box>
+
                             <Box>
                                 {movie.genres ?
                                     <ul style={{ listStyle: 'none' }}>
@@ -51,9 +50,12 @@ class DetailsDisplay extends Component {
                         </Columns.Column>
 
                         <Columns.Column>
+                        <Rater color="#FEd847" total={5} rating={movie.rating} interactive={true} onRate={(click)=>this.handleRating(click)}/>
+
                             <Heading size={1}>
                                 {movie.title}
                             </Heading>
+                 
                             <Heading subtitle size={3}>
                                 {movie.genre}
                             </Heading>
@@ -62,7 +64,8 @@ class DetailsDisplay extends Component {
                             </Box>
                         </Columns.Column>
                     </Columns>
-                    </div>}
+                    // </div>
+                    }
             </Container>
         )
     }
